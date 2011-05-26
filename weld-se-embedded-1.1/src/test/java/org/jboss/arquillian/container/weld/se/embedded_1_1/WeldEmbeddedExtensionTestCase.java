@@ -14,44 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_1.shrinkwrap;
+package org.jboss.arquillian.container.weld.se.embedded_1_1;
 
-import java.util.Collection;
+import javax.enterprise.inject.spi.Extension;
 
 import junit.framework.Assert;
 
-import org.jboss.arquillian.container.weld.se.embedded_1.beans.MyBean;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
 
 /**
- * ShrinkwrapBeanDeploymentArchiveTestCase
+ * WeldEmbeddedIntegrationTestCase
  *
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
  * @version $Revision: $
  */
-public class ShrinkwrapBeanDeploymentArchiveTestCase
+@RunWith(Arquillian.class)
+public class WeldEmbeddedExtensionTestCase
 {
-
-   @Test
-   public void shouldBeAbleToFindAllClasses() throws Exception 
+   @Deployment
+   public static JavaArchive createdeployment() 
    {
-      JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
-                              .addPackage(MyBean.class.getPackage());
-      
-      
-      ShrinkwrapBeanDeploymentArchive beanDeployment = archive.as(ShrinkwrapBeanDeploymentArchive.class);
-      try
-      {
-         Collection<String> classes = beanDeployment.getBeanClasses();
-         Assert.assertEquals(1, classes.size());
-      }
-      finally 
-      {
-         beanDeployment.getClassLoader().close();
-      }
-                              
+      return ShrinkWrap.create(JavaArchive.class)
+                  .addClasses(WasCalledExtension.class)
+                  .addAsServiceProvider(Extension.class, WasCalledExtension.class)
+                  .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+   }
+   
+   @Test
+   public void shouldBeAbleToInjectBeanAsInstanceVariable() throws Exception 
+   {
+      Assert.assertTrue("Extension should have been loaded", WasCalledExtension.wasCalled);
    }
 }

@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_1;
+package org.jboss.arquillian.container.weld.se.embedded_1_1;
 
-import javax.enterprise.inject.spi.Extension;
+import javax.inject.Inject;
 
 import junit.framework.Assert;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.weld.se.embedded_1_1.beans.MyBean;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -35,20 +36,38 @@ import org.junit.runner.RunWith;
  * @version $Revision: $
  */
 @RunWith(Arquillian.class)
-public class WeldEmbeddedExtensionTestCase
+public class WeldEmbeddedIntegrationTestCase
 {
    @Deployment
    public static JavaArchive createdeployment() 
    {
-      return ShrinkWrap.create(JavaArchive.class)
-                  .addClasses(TestExtension.class)
-                  .addAsServiceProvider(Extension.class, TestExtension.class)
+      return ShrinkWrap.create(JavaArchive.class, "test.jar")
+                  .addClasses(
+                        WeldEmbeddedIntegrationTestCase.class,
+                        MyBean.class)
                   .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
    }
+   
+   @Inject
+   private MyBean instanceVariable;
    
    @Test
    public void shouldBeAbleToInjectBeanAsInstanceVariable() throws Exception 
    {
-      Assert.assertTrue("Extension should have been loaded", TestExtension.wasCalled);
+      Assert.assertNotNull(
+            "Verify that the Bean has been injected",
+            instanceVariable);
+      
+      Assert.assertEquals("aslak", instanceVariable.getName());
+   }
+
+   @Test
+   public void shouldBeAbleToInjectBeanAsArgumentVariable(MyBean argumentVariable) throws Exception 
+   {
+      Assert.assertNotNull(
+            "Verify that the Bean has been injected",
+            argumentVariable);
+      
+      Assert.assertEquals("aslak", argumentVariable.getName());
    }
 }

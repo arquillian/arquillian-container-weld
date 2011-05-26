@@ -15,24 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_1;
+package org.jboss.arquillian.container.weld.ee.embedded_1_1;
 
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.spi.Extension;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.core.spi.LoadableExtension;
 
 /**
- * TestExtension
+ * WeldExtension
  *
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
  * @version $Revision: $
  */
-public class TestExtension implements Extension
+public class WeldExtension implements LoadableExtension
 {
-   public static boolean wasCalled = false;
-   
-   public void test(@Observes ProcessAnnotatedType<Object> test)
+   @Override
+   public void register(ExtensionBuilder builder)
    {
-      wasCalled = true;
+      builder.service(DeployableContainer.class, WeldEEMockContainer.class)
+             .observer(LifecycleHandler.class);
    }
+
 }

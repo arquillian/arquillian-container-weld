@@ -20,16 +20,18 @@ import static org.jboss.arquillian.container.weld.ee.embedded_1_1.Utils.findArch
 import static org.jboss.arquillian.container.weld.ee.embedded_1_1.Utils.findBeanClasses;
 import static org.jboss.arquillian.container.weld.ee.embedded_1_1.Utils.findBeansXml;
 
+import javax.enterprise.inject.spi.BeanManager;
+
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.container.spi.client.container.DeploymentException;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
+import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
+import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
+import org.jboss.arquillian.container.spi.context.annotation.ContainerScoped;
+import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
 import org.jboss.arquillian.container.weld.ee.embedded_1_1.mock.TestContainer;
-import org.jboss.arquillian.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.spi.client.container.DeploymentException;
-import org.jboss.arquillian.spi.client.container.LifecycleException;
-import org.jboss.arquillian.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.spi.client.protocol.metadata.ProtocolMetaData;
-import org.jboss.arquillian.spi.core.InstanceProducer;
-import org.jboss.arquillian.spi.core.annotation.ContainerScoped;
-import org.jboss.arquillian.spi.core.annotation.DeploymentScoped;
-import org.jboss.arquillian.spi.core.annotation.Inject;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
@@ -55,6 +57,10 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
 
    @Inject @DeploymentScoped
    private InstanceProducer<WeldManager> weldManagerProducer; 
+
+   // ContextLookup is Strict typed, so we have to expose WeldManager for LifeCycleHandler and BeanManager for CDIEnrichment 
+   @Inject @DeploymentScoped
+   private InstanceProducer<BeanManager> beanManagerProducer; 
 
    @Inject @DeploymentScoped
    private InstanceProducer<ContextClassLoaderManager> contextClassLoaderManagerProducer; 
@@ -95,7 +101,9 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
       bootstrapProducer.set(bootstrap);
 
       // Assume a flat structure
-      weldManagerProducer.set(container.getBeanManager(container.getDeployment().getBeanDeploymentArchives().iterator().next()));
+      WeldManager manager = container.getBeanManager(container.getDeployment().getBeanDeploymentArchives().iterator().next());
+      weldManagerProducer.set(manager);
+      beanManagerProducer.set(manager);
 
       return new ProtocolMetaData();
    }

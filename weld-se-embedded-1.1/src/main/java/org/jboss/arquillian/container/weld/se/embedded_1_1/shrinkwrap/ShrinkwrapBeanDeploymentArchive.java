@@ -14,29 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.ee.embedded_1_1;
+package org.jboss.arquillian.container.weld.se.embedded_1_1.shrinkwrap;
 
-import javax.enterprise.inject.spi.BeanManager;
-
-import org.jboss.arquillian.spi.core.Instance;
-import org.jboss.arquillian.spi.core.annotation.Inject;
-import org.jboss.arquillian.testenricher.cdi.CDIInjectionEnricher;
-import org.jboss.weld.manager.api.WeldManager;
+import org.jboss.shrinkwrap.api.Assignable;
+import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
+import org.jboss.weld.bootstrap.api.Bootstrap;
+import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
 
 /**
- * WeldSETestEnricher
+ * ShrinkwrapBeanDeploymentArchive
  *
  * @author <a href="mailto:aslak@conduct.no">Aslak Knutsen</a>
  * @version $Revision: $
  */
-public class WeldEETestEnricher extends CDIInjectionEnricher
+public interface ShrinkwrapBeanDeploymentArchive extends BeanDeploymentArchive, Assignable
 {
-   @Inject
-   private Instance<WeldManager> weldManager;
+   ShrinkWrapClassLoader getClassLoader();
    
-   @Override
-   protected BeanManager lookupBeanManager()
-   {
-      return weldManager.get();
-   }
+   void setBootstrap(Bootstrap bootstrap);
 }

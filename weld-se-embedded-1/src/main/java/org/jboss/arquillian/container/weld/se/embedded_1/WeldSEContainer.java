@@ -19,15 +19,17 @@ package org.jboss.arquillian.container.weld.se.embedded_1;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.enterprise.inject.spi.BeanManager;
+
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.container.spi.client.container.DeploymentException;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
+import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
+import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
+import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
 import org.jboss.arquillian.container.weld.se.embedded_1.shrinkwrap.ShrinkwrapBeanDeploymentArchive;
-import org.jboss.arquillian.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.spi.client.container.DeploymentException;
-import org.jboss.arquillian.spi.client.container.LifecycleException;
-import org.jboss.arquillian.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.spi.client.protocol.metadata.ProtocolMetaData;
-import org.jboss.arquillian.spi.core.InstanceProducer;
-import org.jboss.arquillian.spi.core.annotation.DeploymentScoped;
-import org.jboss.arquillian.spi.core.annotation.Inject;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 import org.jboss.weld.bootstrap.WeldBootstrap;
@@ -50,6 +52,10 @@ public class WeldSEContainer implements DeployableContainer<WeldSEConfiguration>
    
    @Inject @DeploymentScoped
    private InstanceProducer<WeldManager> weldManagerProducer;
+
+   // ContextLookup is Strict typed, so we have to expose WeldManager for LifeCycleHandler and BeanManager for CDIEnrichment
+   @Inject @DeploymentScoped
+   private InstanceProducer<BeanManager> beanManagerProducer;
 
    @Inject @DeploymentScoped
    private InstanceProducer<WeldBootstrap> weldBootstrapProducer;
@@ -125,6 +131,7 @@ public class WeldSEContainer implements DeployableContainer<WeldSEConfiguration>
       
       weldBootstrapProducer.set(bootstrap);
       weldManagerProducer.set(manager);
+      beanManagerProducer.set(manager);
       
       return new ProtocolMetaData(); // local execution only, not specific protocol metadata needed
    }

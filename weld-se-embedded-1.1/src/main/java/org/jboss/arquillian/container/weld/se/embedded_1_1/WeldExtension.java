@@ -15,38 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.ee.embedded_1_1;
+package org.jboss.arquillian.container.weld.se.embedded_1_1;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.jboss.arquillian.spi.Profile;
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.core.spi.LoadableExtension;
 
 /**
- * WeldEEProfile
+ * WeldExtension
  *
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
  * @version $Revision: $
  */
-public class WeldEEProfile implements Profile
+public class WeldExtension implements LoadableExtension
 {
-   /* (non-Javadoc)
-    * @see org.jboss.arquillian.spi.Profile#getClientProfile()
-    */
-   public Collection<Class<?>> getClientProfile()
+   @Override
+   public void register(ExtensionBuilder builder)
    {
-      List<Class<?>> extensions = new ArrayList<Class<?>>();
-      extensions.add(LifecycleHandler.class);
-      return extensions;
-   }
-
-   /* (non-Javadoc)
-    * @see org.jboss.arquillian.spi.Profile#getContainerProfile()
-    */
-   public Collection<Class<?>> getContainerProfile()
-   {
-      return new ArrayList<Class<?>>();
+      builder.service(DeployableContainer.class, WeldSEContainer.class);
    }
 
 }

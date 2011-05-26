@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.weld.ee.embedded_1_1.beans.TalkingChicken;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;

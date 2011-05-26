@@ -17,14 +17,14 @@
  */
 package org.jboss.arquillian.container.weld.ee.embedded_1_1;
 
-import org.jboss.arquillian.spi.core.InstanceProducer;
-import org.jboss.arquillian.spi.core.annotation.ClassScoped;
-import org.jboss.arquillian.spi.core.annotation.Inject;
-import org.jboss.arquillian.spi.core.annotation.Observes;
-import org.jboss.arquillian.spi.event.container.AfterDeploy;
-import org.jboss.arquillian.spi.event.container.BeforeUnDeploy;
-import org.jboss.arquillian.spi.event.suite.After;
-import org.jboss.arquillian.spi.event.suite.Before;
+import org.jboss.arquillian.container.spi.event.container.AfterDeploy;
+import org.jboss.arquillian.container.spi.event.container.BeforeUnDeploy;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.core.api.annotation.Observes;
+import org.jboss.arquillian.test.spi.annotation.ClassScoped;
+import org.jboss.arquillian.test.spi.event.suite.After;
+import org.jboss.arquillian.test.spi.event.suite.Before;
 import org.jboss.weld.context.bound.BoundConversationContext;
 import org.jboss.weld.context.bound.BoundRequest;
 import org.jboss.weld.context.bound.BoundRequestContext;

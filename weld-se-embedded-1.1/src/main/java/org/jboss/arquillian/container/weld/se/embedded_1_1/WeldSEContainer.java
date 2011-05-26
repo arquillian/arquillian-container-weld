@@ -14,22 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_1;
+package org.jboss.arquillian.container.weld.se.embedded_1_1;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.Extension;
 
-import org.jboss.arquillian.container.weld.se.embedded_1.shrinkwrap.ShrinkwrapBeanDeploymentArchive;
-import org.jboss.arquillian.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.spi.client.container.DeploymentException;
-import org.jboss.arquillian.spi.client.container.LifecycleException;
-import org.jboss.arquillian.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.spi.client.protocol.metadata.ProtocolMetaData;
-import org.jboss.arquillian.spi.core.InstanceProducer;
-import org.jboss.arquillian.spi.core.annotation.DeploymentScoped;
-import org.jboss.arquillian.spi.core.annotation.Inject;
+import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
+import org.jboss.arquillian.container.spi.client.container.DeploymentException;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
+import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
+import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
+import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
+import org.jboss.arquillian.container.weld.se.embedded_1_1.shrinkwrap.ShrinkwrapBeanDeploymentArchive;
+import org.jboss.arquillian.core.api.InstanceProducer;
+import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 import org.jboss.weld.bootstrap.WeldBootstrap;
@@ -53,6 +54,10 @@ public class WeldSEContainer implements DeployableContainer<WeldSEConfiguration>
    
    @Inject @DeploymentScoped
    private InstanceProducer<WeldManager> weldManagerInst;
+
+   // ContextLookup is Strict typed, so we have to expose WeldManager for LifeCycleHandler and BeanManager for CDIEnrichment
+   @Inject @DeploymentScoped
+   private InstanceProducer<BeanManager> beanManagerInst;
 
    @Inject @DeploymentScoped
    private InstanceProducer<WeldBootstrap> weldBootstrapInst;
@@ -138,6 +143,7 @@ public class WeldSEContainer implements DeployableContainer<WeldSEConfiguration>
       
       weldBootstrapInst.set(bootstrap);
       weldManagerInst.set(manager);
+      beanManagerInst.set(manager);
       
       return new ProtocolMetaData();
    }
