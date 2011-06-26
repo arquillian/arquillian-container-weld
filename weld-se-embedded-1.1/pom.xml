@@ -23,7 +23,7 @@
     <properties>
 
         <!-- Versioning -->
-        <version.weld_core>1.1.0.CR1</version.weld_core>
+        <version.weld_core>1.1.1.Final</version.weld_core>
 
     </properties>
 

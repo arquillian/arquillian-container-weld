@@ -21,7 +21,7 @@
 
     <!-- Properties -->
     <properties>
-        <weld-core.version>1.1.0.Final</weld-core.version>
+        <weld-core.version>1.1.1.Final</weld-core.version>
         <glassfish-el.version>2.1.2-b04</glassfish-el.version>
         <jboss-servlet-spec.version>1.0.0.Final</jboss-servlet-spec.version>
         <jboss-ejb-api.version>3.1.0</jboss-ejb-api.version>
