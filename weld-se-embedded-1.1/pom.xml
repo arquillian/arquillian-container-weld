@@ -45,11 +45,6 @@
         <!-- org.jboss.arquillian -->
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-container-test-impl-base</artifactId>
-            <scope>provided</scope> <!--  Needed due to ARQ-391 workaround -->
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-container-spi</artifactId>
         </dependency>
         <dependency>

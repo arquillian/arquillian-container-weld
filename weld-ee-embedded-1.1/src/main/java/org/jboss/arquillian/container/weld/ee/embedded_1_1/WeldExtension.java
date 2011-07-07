@@ -18,8 +18,6 @@
 package org.jboss.arquillian.container.weld.ee.embedded_1_1;
 
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.container.test.impl.execution.AfterLifecycleEventExecuter;
-import org.jboss.arquillian.container.test.impl.execution.BeforeLifecycleEventExecuter;
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
 /**
@@ -35,10 +33,5 @@ public class WeldExtension implements LoadableExtension
    {
       builder.service(DeployableContainer.class, WeldEEMockContainer.class)
              .observer(LifecycleHandler.class);
-      
-      // TODO: Temp workaround for ARQ-391, Can be removed when Arq Core understands the difference between Embedded and Remote. 
-      builder.observer(AfterLifecycleEventExecuter.class)
-             .observer(BeforeLifecycleEventExecuter.class);
    }
-
 }
