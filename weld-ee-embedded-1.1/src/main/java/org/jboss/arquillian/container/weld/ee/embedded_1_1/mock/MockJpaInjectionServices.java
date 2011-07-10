@@ -19,6 +19,7 @@ package org.jboss.arquillian.container.weld.ee.embedded_1_1.mock;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import org.jboss.weld.injection.spi.JpaInjectionServices;
 
@@ -27,7 +28,10 @@ public class MockJpaInjectionServices implements JpaInjectionServices
    
    public EntityManager resolvePersistenceContext(InjectionPoint injectionPoint)
    {
-      return null;
+		EntityManagerFactory entityManagerFactory = Persistence
+				.createEntityManagerFactory("testPu");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+      return entityManager;
    }
    
    public EntityManagerFactory resolvePersistenceUnit(InjectionPoint injectionPoint)
