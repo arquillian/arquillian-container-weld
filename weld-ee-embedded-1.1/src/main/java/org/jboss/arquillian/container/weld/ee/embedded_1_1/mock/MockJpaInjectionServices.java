@@ -25,20 +25,29 @@ import org.jboss.weld.injection.spi.JpaInjectionServices;
 
 public class MockJpaInjectionServices implements JpaInjectionServices
 {
+	private EntityManager entityManager;
    
    public EntityManager resolvePersistenceContext(InjectionPoint injectionPoint)
    {
-		EntityManagerFactory entityManagerFactory = Persistence
-				.createEntityManagerFactory("testPu");
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-      return entityManager;
+	   initialiseEntityManagerIfNecessary();
+       return entityManager;
    }
+
+private void initialiseEntityManagerIfNecessary() {
+	if (entityManager == null) {
+			EntityManagerFactory entityManagerFactory = Persistence
+					.createEntityManagerFactory("testPu");
+			entityManager = entityManagerFactory.createEntityManager();
+	   }
+}
    
    public EntityManagerFactory resolvePersistenceUnit(InjectionPoint injectionPoint)
    {
       return null;
    }
    
-   public void cleanup() {}
+   public void cleanup() {
+	   entityManager = null;
+   }
 
 }
