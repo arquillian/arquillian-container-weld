@@ -43,7 +43,7 @@ public class MockJpaInjectionServices implements JpaInjectionServices
    private String getPersistenceUnitName(InjectionPoint injectionPoint) {
 	   String nameOnAnnotation = injectionPoint.getAnnotated().getAnnotation(PersistenceContext.class).unitName();
 	   if (isEmpty(nameOnAnnotation)) {
-		   return "testPu";
+		   return null;
 	   } else {
 		   return nameOnAnnotation;
 	   }
