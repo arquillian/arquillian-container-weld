@@ -73,7 +73,7 @@ public class MockJpaInjectionServices implements JpaInjectionServices
 	   for (String persistenceUnitName : entityManagersByUnitName.keySet()) {
 		   entityManagersByUnitName.get(persistenceUnitName).close();
 	   }
-	   entityManagersByUnitName = new HashMap<String, EntityManager>(); 
+	   entityManagersByUnitName.clear();
    }
 
 }
