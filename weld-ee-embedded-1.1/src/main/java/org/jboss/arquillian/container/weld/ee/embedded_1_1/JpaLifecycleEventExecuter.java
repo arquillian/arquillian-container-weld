@@ -7,7 +7,7 @@ import org.jboss.weld.manager.api.WeldManager;
 
 public class JpaLifecycleEventExecuter {
 
-	   public void on(@Observes(precedence = 100) After event, WeldManager manager) throws Throwable
+	   public void on(@Observes After event, WeldManager manager) throws Throwable
 	   {
           cleanupJpaInjectionServices(manager);
 	   }
