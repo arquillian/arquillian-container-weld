@@ -1,5 +1,6 @@
 package org.jboss.arquillian.container.weld.ee.embedded_1_1;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
@@ -48,4 +49,18 @@ public class JpaLifecycleEventExecuterTestCase {
 				entityManager);
 	}
 
+	@Test
+	public void shouldPersistAndRetrieveEntity() {
+		entityManager.getTransaction().begin();
+		Dog dog = new Dog("Sega");
+		entityManager.persist(dog);
+		entityManager.getTransaction().commit();
+
+		Dog retrievedDog = (Dog) entityManager
+				.createQuery("FROM Dog where name = :name")
+				.setParameter("name", "Sega").getResultList().get(0);
+		assertEquals(
+				"Created and persisted dog should be the same as retrieved dog.",
+				dog, retrievedDog);
+	}
 }
