@@ -56,12 +56,6 @@
             <artifactId>arquillian-testenricher-cdi</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.jboss.shrinkwrap</groupId>
-            <artifactId>shrinkwrap-impl-base</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- org.jboss.weld -->
         <dependency>
             <groupId>org.jboss.weld</groupId>
@@ -137,6 +131,11 @@
         <dependency>
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-impl-base</artifactId>
             <scope>test</scope>
         </dependency>
 

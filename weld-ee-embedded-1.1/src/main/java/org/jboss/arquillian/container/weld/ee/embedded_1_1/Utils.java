@@ -29,12 +29,12 @@ import java.util.Map;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 
+import org.jboss.arquillian.core.spi.Validate;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
-import org.jboss.shrinkwrap.impl.base.Validate;
-import org.jboss.shrinkwrap.impl.base.asset.ArchiveAsset;
+import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
 
 /**
  * BeanUtils
