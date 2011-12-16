@@ -82,6 +82,8 @@ public class ServiceLoader<S> implements Iterable<Metadata<S>>
    
    private static final String SERVICES = "META-INF/services";
 
+   private static final String WAR_SERVICES = "WEB-INF/classes/" + SERVICES;
+
    private static final Logger log = Logger.getLogger("ServiceLoader");
 
    /**
@@ -158,8 +160,21 @@ public class ServiceLoader<S> implements Iterable<Metadata<S>>
    private ServiceLoader(Class<S> service, ClassLoader loader)
    {
       this.loader = loader;
-      this.serviceFile = SERVICES + "/" + service.getName();
+      this.serviceFile = findServicesLocation(loader) + "/" + service.getName();
       this.expectedType = service;
+   }
+
+   private String findServicesLocation(ClassLoader loader)
+   {
+      if (isWebArchive(loader))
+         return WAR_SERVICES;
+
+      return SERVICES;
+   }
+
+   private boolean isWebArchive(ClassLoader loader)
+   {
+      return loader.getResource("WEB-INF/beans.xml") != null;
    }
 
    /**
