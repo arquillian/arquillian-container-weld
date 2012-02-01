@@ -34,6 +34,7 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 import org.jboss.weld.bootstrap.api.Bootstrap;
 import org.jboss.weld.manager.api.WeldManager;
@@ -42,6 +43,7 @@ import org.jboss.weld.manager.api.WeldManager;
  * WeldEEMockConainer
  *
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
+ * @author <a href="mailto:mkouba@redhat.com">Martin Kouba</a>
  * @version $Revision: $
  */
 public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfiguration>
@@ -86,7 +88,7 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
 
    public ProtocolMetaData deploy(Archive<?> archive) throws DeploymentException
    {  
-      ShrinkWrapClassLoader classLoader = new ShrinkWrapClassLoader(archive.getClass().getClassLoader(), archive);
+      ShrinkWrapClassLoader classLoader = getClassLoader(archive);
       ContextClassLoaderManager classLoaderManager = new ContextClassLoaderManager(classLoader);
       classLoaderManager.enable();
       
@@ -132,4 +134,10 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
    {
       throw new UnsupportedOperationException("Weld EE Container does not support undeployment of Descriptors");
    }
+   
+   private ShrinkWrapClassLoader getClassLoader(Archive<?> archive) {
+       Archive<?> classLoaderArchive = (archive instanceof WebArchive) ? new WebArchiveWrapper((WebArchive) archive) : archive;
+       return new ShrinkWrapClassLoader(classLoaderArchive.getClass().getClassLoader(), classLoaderArchive);
+   }
+ 
 }
