@@ -16,6 +16,7 @@
  */
 package org.jboss.arquillian.container.weld.ee.embedded_1_1;
 
+import javax.enterprise.inject.spi.Extension;
 import javax.inject.Inject;
 
 import junit.framework.Assert;
@@ -45,14 +46,19 @@ public class WeldEmbeddedIntegrationWARTestCase
       return ShrinkWrap.create(WebArchive.class, "test.war")
                   .addClasses(
                         WeldEmbeddedIntegrationWARTestCase.class,
+                        BeforeBeanDiscoveryObserver.class,
                         MyBean.class)
+                  .addAsServiceProvider(Extension.class, BeforeBeanDiscoveryObserver.class)
                   .addAsWebResource(
                         EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
    
    @Inject
    private MyBean instanceVariable;
-   
+
+   @Inject
+   private BeforeBeanDiscoveryObserver extension;
+
    @Test
    public void shouldBeAbleToInjectBeanAsInstanceVariable() throws Exception 
    {
@@ -72,4 +78,12 @@ public class WeldEmbeddedIntegrationWARTestCase
       
       Assert.assertEquals("aslak", argumentVariable.getName());
    }
+
+   @Test
+   public void testExtensionIsLoaded()
+   {
+       Assert.assertNotNull(extension);
+       Assert.assertTrue(BeforeBeanDiscoveryObserver.eventObserved);
+   }
+
 }

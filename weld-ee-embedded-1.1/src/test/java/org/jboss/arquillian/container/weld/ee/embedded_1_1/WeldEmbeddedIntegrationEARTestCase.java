@@ -47,7 +47,7 @@ public class WeldEmbeddedIntegrationEARTestCase
                   .addAsModule(
                         ShrinkWrap.create(WebArchive.class)
                            .addClasses(
-                              WeldEmbeddedIntegrationWARTestCase.class,
+                              WeldEmbeddedIntegrationEARTestCase.class,
                               MyBean.class)
                            .addAsWebResource(
                               EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"))
