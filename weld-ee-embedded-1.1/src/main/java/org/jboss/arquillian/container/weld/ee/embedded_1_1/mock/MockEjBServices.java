@@ -21,44 +21,72 @@ import org.jboss.weld.ejb.spi.EjbDescriptor;
 import org.jboss.weld.ejb.spi.EjbServices;
 import org.jboss.weld.ejb.spi.InterceptorBindings;
 
+import javax.ejb.NoSuchEJBException;
+
 public class MockEjBServices implements EjbServices
 {
 
 
+    public SessionObjectReference resolveEjb(EjbDescriptor<?> ejbDescriptor)
+    {
+        return new MockSessionObjectReference(createInstance(ejbDescriptor));
+    }
 
-   public SessionObjectReference resolveEjb(EjbDescriptor<?> ejbDescriptor)
-   {
-      return new SessionObjectReference()
-      {
+    private Object createInstance(EjbDescriptor<?> ejbDescriptor)
+    {
+        try
+        {
+            return ejbDescriptor.getBeanClass().newInstance();
+        }
+        catch (InstantiationException e)
+        {
+            throw new RuntimeException("Could not instantiate EJB " + ejbDescriptor.getBeanClass(), e);
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new RuntimeException("Could not instantiate EJB " + ejbDescriptor.getBeanClass(), e);
+        }
+    }
 
-         private static final long serialVersionUID = 1L;
+    public void registerInterceptors(EjbDescriptor<?> ejbDescriptor, InterceptorBindings interceptorBindings)
+    {
+        // do nothing
+    }
 
-         public <S> S getBusinessObject(Class<S> businessInterfaceType)
-         {
-            // TODO Auto-generated method stub
-            return null;
-         }
+    public void cleanup()
+    {
+    }
 
-         public void remove()
-         {
-            // TODO Auto-generated method stub
+    private class MockSessionObjectReference implements SessionObjectReference
+    {
 
-         }
+        private static final long serialVersionUID = 2L;
+        private Object ejb;
+        private boolean removed;
 
-         public boolean isRemoved()
-         {
-            // TODO Auto-generated method stub
-            return false;
-         }
+        public MockSessionObjectReference(Object ejb)
+        {
+            this.ejb = ejb;
+        }
 
-      };
-   }
+        public <S> S getBusinessObject(Class<S> businessInterfaceType)
+        {
+            if (removed)
+            {
+                throw new NoSuchEJBException("already removed");
+            }
+            return (S) ejb;
+        }
 
-   public void registerInterceptors(EjbDescriptor<?> ejbDescriptor, InterceptorBindings interceptorBindings)
-   {
-      // do nothing
-   }
+        public void remove()
+        {
+            ejb = null;
+            removed = true;
+        }
 
-   public void cleanup() {}
-
+        public boolean isRemoved()
+        {
+            return removed;
+        }
+    }
 }
