@@ -10,16 +10,20 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
 
 /**
- * Intended solely as a workaround for loading CDI extensions in web archives. Specifications (Servlet, EE, ...) are rather unclear as
- * regards lookup of service providers in web archives. See <a
- * href="https://issues.jboss.org/browse/SHRINKWRAP-369">SHRINKWRAP-369</a> for more information.
+ * {@link ClassLoader} implementation extending the {@link ShrinkWrapClassLoader} to serve
+ * as an indirection between the requested resource and the Web Specification's 
+ * root under which resources are to be served ("WEB-INF/classes").
  *
  * @author <a href="mailto:mkouba@redhat.com">Martin Kouba</a>
+ * @author <a href="mailto:alr@jboss.org">ALR</a>
+ * @see https://issues.jboss.org/browse/SHRINKWRAP-369
  */
 public class WebArchiveClassLoader extends ShrinkWrapClassLoader {
 
-    private static final String SERVICES = "META-INF/services";
-    private static final String WAR_SERVICES = "WEB-INF/classes/" + SERVICES;
+    /**
+     * Web specification resource root
+     */
+    private static final String WAR_ROOT_LOCATION = "WEB-INF/classes/";
 
     public WebArchiveClassLoader(Archive<?>... archives) {
         super(archives);
@@ -31,32 +35,20 @@ public class WebArchiveClassLoader extends ShrinkWrapClassLoader {
 
     @Override
     public URL findResource(String name) {
-
-        URL url = null;
-
-        if (name.contains(SERVICES) && name.contains(Extension.class.getName())) {
-             url = super.findResource(name.replace(SERVICES, WAR_SERVICES));
-        }
-        if (url == null) {
-            // Fallback
-            url = super.findResource(name);
-        }
+        
+        final String adjustedName = WAR_ROOT_LOCATION + name;
+        final URL url = super.findResource(adjustedName);
+        
         return url;
     }
 
     @Override
     public Enumeration<URL> findResources(String name) throws IOException {
 
-        Enumeration<URL> urls = null;
-
-        if (name.contains(SERVICES) && name.contains(Extension.class.getName())) {
-            urls = super.findResources(name.replace(SERVICES, WAR_SERVICES));
-       }
-       if (urls == null || !urls.hasMoreElements()) {
-           // Fallback
-           urls = super.findResources(name);
-       }
-       return urls;
+        final String adjustedName = WAR_ROOT_LOCATION + name;
+        final Enumeration<URL> urls = super.findResources(adjustedName);
+        
+        return urls;
     }
 
 }
