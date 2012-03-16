@@ -48,6 +48,11 @@ import org.jboss.weld.manager.api.WeldManager;
  */
 public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfiguration>
 {
+   /**
+    * Suffix denoting a web archive is being used
+    */
+   private static final String SUFFIX_WEB_ARCHIVE = ".war"; 
+
    @Inject @ContainerScoped
    private InstanceProducer<WeldEEMockConfiguration> configuration;
    
@@ -136,7 +141,7 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
    }
 
     private ShrinkWrapClassLoader getClassLoader(Archive<?> archive) {
-        return (archive instanceof WebArchive) ? new WebArchiveClassLoader(archive.getClass().getClassLoader(), archive)
+        return (archive.getName().endsWith(SUFFIX_WEB_ARCHIVE)) ? new WebArchiveClassLoader(archive.getClass().getClassLoader(), archive)
                 : new ShrinkWrapClassLoader(archive.getClass().getClassLoader(), archive);
     }
 
