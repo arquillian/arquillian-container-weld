@@ -102,10 +102,14 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
 
       contextClassLoaderManagerProducer.set(classLoaderManager);
 
-      container.startContainer();
+      try {
+          container.startContainer();
+      } finally {
+          // always set container - even if an exception occurs, we want the container to be cleaned up properly in undeploy()
+          testContainerProducer.set(container);
+          bootstrapProducer.set(bootstrap);
+      }
 
-      testContainerProducer.set(container);
-      bootstrapProducer.set(bootstrap);
 
       // Assume a flat structure
       WeldManager manager = container.getBeanManager(container.getDeployment().getBeanDeploymentArchives().iterator().next());
