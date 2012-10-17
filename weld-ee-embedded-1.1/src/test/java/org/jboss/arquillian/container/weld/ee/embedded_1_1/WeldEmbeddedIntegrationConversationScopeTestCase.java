@@ -25,12 +25,12 @@ import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.weld.ee.embedded_1_1.beans.TalkingChicken;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -59,7 +59,7 @@ public class WeldEmbeddedIntegrationConversationScopeTestCase
    
    @Inject Conversation conversation;
    
-   @Test
+   @Test @InSequence(0)
    public void shouldBeAbleToSetAgeWithoutStartingAConversation() throws Exception 
    {
       Assert.assertNotNull(
@@ -70,7 +70,7 @@ public class WeldEmbeddedIntegrationConversationScopeTestCase
       assertEquals(new Integer(10), chicken.getAge());
    }
 
-   @Test
+   @Test @InSequence(1)
    public void shouldNotBeAbleToReadAgeConversationNotStarted() throws Exception 
    {
       assertNotNull(
@@ -80,7 +80,7 @@ public class WeldEmbeddedIntegrationConversationScopeTestCase
       assertEquals(new Integer(-1), chicken.getAge());
    }
 
-   @Test
+   @Test @InSequence(2)
    public void shouldBeAbleToSetAgeAndStartAConversation() throws Exception 
    {
       assertNotNull(
@@ -91,8 +91,7 @@ public class WeldEmbeddedIntegrationConversationScopeTestCase
       conversation.begin();
    }
 
-   // This works most of the time, you can uncomment to test manually
-   @Test @Ignore // Can't do dependent methods in JUnit
+   @Test @InSequence(3) 
    public void shouldBeAbleToReadAgeAfterConversationWasStarted() throws Exception 
    {
       assertNotNull(
