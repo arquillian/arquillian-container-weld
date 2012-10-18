@@ -97,7 +97,7 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
       ContextClassLoaderManager classLoaderManager = new ContextClassLoaderManager(classLoader);
       classLoaderManager.enable();
       
-      TestContainer container = new TestContainer(findArchiveId(archive), findBeansXml(archive), findBeanClasses(archive, classLoader));
+      TestContainer container = new TestContainer(findArchiveId(archive), findBeansXml(archive), findBeanClasses(archive, classLoader), true);
       Bootstrap bootstrap = container.getBootstrap();
 
       contextClassLoaderManagerProducer.set(classLoaderManager);

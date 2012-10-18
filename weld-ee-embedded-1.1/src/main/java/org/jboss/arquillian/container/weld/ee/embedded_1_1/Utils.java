@@ -79,7 +79,7 @@ final class Utils
             try 
             {
                beansXmls.add(
-                     new URL(null, "archive://" + entry.getKey().get(), new URLStreamHandler() 
+                     new URL(null, "archive://" + nestedArchive.getArchive().getName() +  entry.getKey().get(), new URLStreamHandler() 
                      {
                         @Override
                         protected java.net.URLConnection openConnection(URL u) throws java.io.IOException 

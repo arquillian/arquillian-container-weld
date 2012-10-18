@@ -34,6 +34,7 @@ import org.jboss.weld.bootstrap.api.Environments;
 import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
 import org.jboss.weld.bootstrap.spi.BeansXml;
 import org.jboss.weld.bootstrap.spi.Deployment;
+import org.jboss.weld.bootstrap.spi.Metadata;
 import org.jboss.weld.context.RequestContext;
 import org.jboss.weld.context.bound.BoundSessionContext;
 import org.jboss.weld.context.unbound.UnboundLiteral;
@@ -208,8 +209,30 @@ public class TestContainer
 
    public TestContainer(String beanArchiveId, Collection<URL> beansXml, Collection<Class<?>> classes)
    {
+	   this(beanArchiveId, beansXml, classes, false);
+   }
+
+   public TestContainer(String beanArchiveId, Collection<URL> beansXml, Collection<Class<?>> classes, boolean merge)
+   {
       this.bootstrap = new WeldBootstrap();
-      this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(beanArchiveId, bootstrap.parse(beansXml), classes));
+
+      BeansXml xml = bootstrap.parse(beansXml);
+      if(merge) {
+    	  removeDuplicate(xml.getEnabledInterceptors());
+      }
+      this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(beanArchiveId, xml, classes));
+   }
+
+   private void removeDuplicate(List<Metadata<String>> list) {
+	   for(int i = 0; i < list.size(); i++) {
+		   Metadata<String> item = list.get(i);
+		   for(int n = i+1; n < list.size(); n++) {
+			   if(item.getValue().equals(list.get(n).getValue())) {
+				   list.remove(i);
+				   i--;
+			   }
+		   }
+	   }
    }
 
    /**
