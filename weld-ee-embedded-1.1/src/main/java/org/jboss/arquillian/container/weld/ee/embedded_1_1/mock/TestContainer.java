@@ -17,6 +17,7 @@
 package org.jboss.arquillian.container.weld.ee.embedded_1_1.mock;
 
 import static java.util.Arrays.asList;
+import static org.jboss.arquillian.container.weld.ee.embedded_1_1.mock.BeansXmlUtil.removeDuplicate;
 
 import java.net.URL;
 import java.util.Collection;
@@ -208,8 +209,18 @@ public class TestContainer
 
    public TestContainer(String beanArchiveId, Collection<URL> beansXml, Collection<Class<?>> classes)
    {
+	   this(beanArchiveId, beansXml, classes, false);
+   }
+
+   public TestContainer(String beanArchiveId, Collection<URL> beansXml, Collection<Class<?>> classes, boolean merge)
+   {
       this.bootstrap = new WeldBootstrap();
-      this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(beanArchiveId, bootstrap.parse(beansXml), classes));
+
+      BeansXml xml = bootstrap.parse(beansXml);
+      if(merge) {
+         removeDuplicate(xml);
+      }
+      this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(beanArchiveId, xml, classes));
    }
 
    /**

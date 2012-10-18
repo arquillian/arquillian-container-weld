@@ -34,7 +34,6 @@ import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 import org.jboss.weld.bootstrap.api.Bootstrap;
 import org.jboss.weld.manager.api.WeldManager;
@@ -97,7 +96,7 @@ public class WeldEEMockContainer implements DeployableContainer<WeldEEMockConfig
       ContextClassLoaderManager classLoaderManager = new ContextClassLoaderManager(classLoader);
       classLoaderManager.enable();
       
-      TestContainer container = new TestContainer(findArchiveId(archive), findBeansXml(archive), findBeanClasses(archive, classLoader));
+      TestContainer container = new TestContainer(findArchiveId(archive), findBeansXml(archive), findBeanClasses(archive, classLoader), true);
       Bootstrap bootstrap = container.getBootstrap();
 
       contextClassLoaderManagerProducer.set(classLoaderManager);
