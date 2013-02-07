@@ -109,6 +109,12 @@ public class ShrinkwrapBeanDeploymentArchiveImpl implements ShrinkwrapBeanDeploy
 
    public Collection<Class<?>> getBeanClasses()
    {
+      Map<ArchivePath, Node> markerFiles = archive.getContent(Filters.include(".*/beans.xml"));
+      if (markerFiles.isEmpty())
+      {
+         return Collections.<Class<?>> emptySet();
+      }
+
       List<Class<?>> beanClasses = new ArrayList<Class<?>>();
       Map<ArchivePath, Node> classes = archive.getContent(Filters.include(".*\\.class"));
 

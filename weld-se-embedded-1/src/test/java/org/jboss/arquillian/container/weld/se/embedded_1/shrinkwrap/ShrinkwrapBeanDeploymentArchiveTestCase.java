@@ -22,6 +22,7 @@ import junit.framework.Assert;
 
 import org.jboss.arquillian.container.weld.se.embedded_1.beans.MyBean;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 
@@ -39,8 +40,9 @@ public class ShrinkwrapBeanDeploymentArchiveTestCase
    public void shouldBeAbleToFindAllClasses() throws Exception 
    {
       JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
-                              .addPackage(MyBean.class.getPackage());
-      
+                              .addPackage(MyBean.class.getPackage())
+                              .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+
       
       ShrinkwrapBeanDeploymentArchive beanDeployment = archive.as(ShrinkwrapBeanDeploymentArchive.class);
       try
@@ -53,5 +55,25 @@ public class ShrinkwrapBeanDeploymentArchiveTestCase
          beanDeployment.getClassLoader().close();
       }
                               
+   }
+
+   @Test
+   public void shouldBeAbleToFindNoClasses() throws Exception 
+   {
+      JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
+               .addPackage(MyBean.class.getPackage());
+
+
+      ShrinkwrapBeanDeploymentArchive beanDeployment = archive.as(ShrinkwrapBeanDeploymentArchive.class);
+      try
+      {
+         Collection<Class<?>> classes = beanDeployment.getBeanClasses();
+         Assert.assertTrue(classes.isEmpty());
+      }
+      finally
+      {
+         beanDeployment.getClassLoader().close();
+      }
+
    }
 }
