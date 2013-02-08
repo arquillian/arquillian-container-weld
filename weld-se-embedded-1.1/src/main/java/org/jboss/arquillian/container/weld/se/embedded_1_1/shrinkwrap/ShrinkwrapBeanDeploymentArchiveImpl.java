@@ -147,6 +147,11 @@ public class ShrinkwrapBeanDeploymentArchiveImpl extends AssignableBase<Archive<
 
    public Collection<String> getBeanClasses()
    {
+      Map<ArchivePath, Node> markerFiles = getArchive().getContent(Filters.include(".*/beans.xml"));
+      if (markerFiles.isEmpty())
+      {
+         return Collections.<String> emptySet();
+      }
       List<String> beanClasses = new ArrayList<String>();
       Map<ArchivePath, Node> classes = getArchive().getContent(Filters.include(".*\\.class"));
 

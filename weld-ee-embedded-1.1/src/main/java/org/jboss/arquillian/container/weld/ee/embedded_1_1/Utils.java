@@ -152,6 +152,11 @@ final class Utils
                continue;
             }
             ArchiveAsset nestedArchive = (ArchiveAsset)nestedArchiveEntry.getValue().getAsset();
+            Map<ArchivePath, Node> markerFiles = nestedArchive.getArchive().getContent(Filters.include(".*/beans.xml"));
+            if (markerFiles.isEmpty()) {
+               continue;
+            }
+
             Map<ArchivePath, Node> classes = nestedArchive.getArchive().getContent(Filters.include(".*\\.class"));
             for(Map.Entry<ArchivePath, Node> classEntry : classes.entrySet()) 
             {
@@ -161,13 +166,16 @@ final class Utils
                beanClasses.add(loadedClass);
             }
          }
-         Map<ArchivePath, Node> classes = archive.getContent(Filters.include(".*\\.class"));
-         for(Map.Entry<ArchivePath, Node> classEntry : classes.entrySet()) 
-         {
-            Class<?> loadedClass = classLoader.loadClass(
-                  findClassName(classEntry.getKey())); 
-   
-            beanClasses.add(loadedClass);
+         Map<ArchivePath, Node> markerFiles = archive.getContent(Filters.include(".*/beans.xml"));
+         if (!markerFiles.isEmpty()) {
+            Map<ArchivePath, Node> classes = archive.getContent(Filters.include(".*\\.class"));
+            for(Map.Entry<ArchivePath, Node> classEntry : classes.entrySet()) 
+            {
+               Class<?> loadedClass = classLoader.loadClass(
+                     findClassName(classEntry.getKey())); 
+      
+               beanClasses.add(loadedClass);
+            }
          }
       }
       catch (ClassNotFoundException e) 

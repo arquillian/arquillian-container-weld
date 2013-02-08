@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2009, Red Hat Middleware LLC, and individual contributors
+ * Copyright 2013, Red Hat Middleware LLC, and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -14,46 +14,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_1_1.shrinkwrap;
+package org.jboss.arquillian.container.weld.ee.embedded_1_1;
 
 import java.util.Collection;
 
 import junit.framework.Assert;
 
-import org.jboss.arquillian.container.weld.se.embedded_1_1.beans.MyBean;
-import org.jboss.arquillian.container.weld.se.embedded_1_1.shrinkwrap.ShrinkwrapBeanDeploymentArchive;
+import org.jboss.arquillian.container.weld.ee.embedded_1_1.beans.MyBean;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 
 
 /**
- * ShrinkwrapBeanDeploymentArchiveTestCase
+ * UtilsTestCase
  *
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
+ * @author Matt Benson
  * @version $Revision: $
  */
-public class ShrinkwrapBeanDeploymentArchiveTestCase
+public class UtilsTestCase
 {
 
    @Test
    public void shouldBeAbleToFindAllClasses() throws Exception 
    {
       JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
-                              .addPackage(MyBean.class.getPackage())
+                              .addClass(MyBean.class)
                               .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 
+      ShrinkWrapClassLoader classLoader = new ShrinkWrapClassLoader(archive.getClass().getClassLoader(), archive);
 
-      ShrinkwrapBeanDeploymentArchive beanDeployment = archive.as(ShrinkwrapBeanDeploymentArchive.class);
       try
       {
-         Collection<String> classes = beanDeployment.getBeanClasses();
+         Collection<Class<?>> classes = Utils.findBeanClasses(archive, classLoader);
          Assert.assertEquals(1, classes.size());
       }
       finally
       {
-         beanDeployment.getClassLoader().close();
+         classLoader.close();
       }
 
    }
@@ -62,18 +63,18 @@ public class ShrinkwrapBeanDeploymentArchiveTestCase
    public void shouldBeAbleToFindNoClasses() throws Exception 
    {
       JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
-               .addPackage(MyBean.class.getPackage());
+               .addClass(MyBean.class);
 
+      ShrinkWrapClassLoader classLoader = new ShrinkWrapClassLoader(archive.getClass().getClassLoader(), archive);
 
-      ShrinkwrapBeanDeploymentArchive beanDeployment = archive.as(ShrinkwrapBeanDeploymentArchive.class);
       try
       {
-         Collection<String> classes = beanDeployment.getBeanClasses();
+         Collection<Class<?>> classes = Utils.findBeanClasses(archive, classLoader);
          Assert.assertTrue(classes.isEmpty());
       }
       finally
       {
-         beanDeployment.getClassLoader().close();
+         classLoader.close();
       }
 
    }
