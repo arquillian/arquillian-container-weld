@@ -22,22 +22,10 @@
     <properties>
 
         <!-- Versioning -->
-        <version.weld_core>1.1.5.Final</version.weld_core>
+        <weld-core-1_1.version>1.1.1.Final</weld-core-1_1.version>
+        <weld-core-2.version>2.0.0.Beta2</weld-core-2.version>
 
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- org.jboss.weld -->
-            <dependency>
-                <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-core-bom</artifactId>
-                <version>${version.weld_core}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <!-- Dependencies -->
     <dependencies>
@@ -101,4 +89,38 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>1.1.x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jboss.weld</groupId>
+                        <artifactId>weld-core-bom</artifactId>
+                        <version>${weld-core-1_1.version}</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+
+        </profile>
+        <profile>
+            <id>2.x</id>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jboss.weld</groupId>
+                        <artifactId>weld-core-bom</artifactId>
+                        <version>${weld-core-2.version}</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+    </profiles>
 </project>

@@ -18,8 +18,8 @@
 package org.jboss.arquillian.container.weld.se.embedded_1_1;
 
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
 
 /**
  * TestExtension
@@ -31,7 +31,7 @@ public class WasCalledExtension implements Extension
 {
    public static boolean wasCalled = false;
    
-   public void test(@Observes ProcessAnnotatedType<Object> test)
+   public void test(@Observes BeforeBeanDiscovery test)
    {
       wasCalled = true;
    }

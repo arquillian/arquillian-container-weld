@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
-import javax.enterprise.inject.spi.Extension;
-
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
 
