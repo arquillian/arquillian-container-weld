@@ -23,6 +23,7 @@ import junit.framework.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.weld.ee.embedded_1_1.beans.Chicken;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -53,7 +54,7 @@ public class WeldEmbeddedIntegrationSessionScopeTestCase
    @Inject
    private Chicken chicken;
    
-   @Test
+   @Test @InSequence(0)
    public void shouldBeAbleToSetAge() throws Exception 
    {
       Assert.assertNotNull(
@@ -63,7 +64,7 @@ public class WeldEmbeddedIntegrationSessionScopeTestCase
       chicken.setAge(10);
    }
 
-   @Test
+   @Test @InSequence(1)
    public void shouldBeAbleToReadAge() throws Exception 
    {
       Assert.assertNotNull(
