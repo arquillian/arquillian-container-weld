@@ -199,6 +199,7 @@ final class Utils
       }
       className = className.replaceAll("\\.class", "");
       className = className.replaceAll("/", ".");
+      className = className.replaceAll("\\\\", ".");
       return className;
    }
 
