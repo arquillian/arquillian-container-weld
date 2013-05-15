@@ -19,6 +19,7 @@ package org.jboss.arquillian.container.weld.ee.embedded_1_1.mock;
 import javax.enterprise.inject.spi.InjectionPoint;
 
 import org.jboss.weld.injection.spi.ResourceInjectionServices;
+import org.jboss.weld.injection.spi.ResourceReferenceFactory;
 
 /**
  * @author Pete Muir
@@ -38,5 +39,14 @@ public class MockResourceInjectionServices implements ResourceInjectionServices
    }
    
    public void cleanup() {}
-   
+
+   @Override
+   public ResourceReferenceFactory<Object> registerResourceInjectionPoint(InjectionPoint injectionPoint) {
+      return null;
+   }
+
+   @Override
+   public ResourceReferenceFactory<Object> registerResourceInjectionPoint(String jndiName, String mappedName) {
+      return null;
+   }
 }

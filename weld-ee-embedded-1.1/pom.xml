@@ -20,11 +20,11 @@
 
     <!-- Properties -->
     <properties>
-        <weld-core-1_1.version>1.1.5.Final</weld-core-1_1.version>
-        <weld-core-2.version>2.0.0.Beta2</weld-core-2.version>
-        <glassfish-el.version>2.1.2-b04</glassfish-el.version>
-        <jboss-servlet-spec.version>1.0.0.Final</jboss-servlet-spec.version>
-        <jboss-ejb-api.version>3.1.0</jboss-ejb-api.version>
+        <weld-core-1_1.version>1.1.13.Final</weld-core-1_1.version>
+        <weld-core-2.version>2.0.0.Final</weld-core-2.version> 
+        <weld-api.version>2.0.Final</weld-api.version>
+        <javax.el.version>3.0-b08</javax.el.version>
+        <cdi.api.version>1.1</cdi.api.version>
     </properties>
 
     <!-- Dependencies -->
@@ -48,31 +48,39 @@
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-api</artifactId>
+            <version>${weld-api.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-spi</artifactId>
+            <version>${weld-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core</artifactId>
             <scope>provided</scope>
         </dependency>
-
+        
         <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>${cdi.api.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>el-impl</artifactId>
-            <version>${glassfish-el.version}</version>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.servlet</groupId>
             <artifactId>jboss-servlet-api_3.0_spec</artifactId>
-            <version>${jboss-servlet-spec.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -95,9 +103,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.ejb3</groupId>
-            <artifactId>jboss-ejb3-api</artifactId>
-            <version>${jboss-ejb-api.version}</version>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -132,9 +139,6 @@
     <profiles>
         <profile>
             <id>1.1.x</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <dependencyManagement>
                 <dependencies>
                     <dependency>
@@ -149,8 +153,10 @@
 
         </profile>
         <profile>
-            <!-- Runtime Profile only. Can not be used for compiling due to BeansXml changes. -->
             <id>2.x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <dependencyManagement>
                 <dependencies>
                     <dependency>
