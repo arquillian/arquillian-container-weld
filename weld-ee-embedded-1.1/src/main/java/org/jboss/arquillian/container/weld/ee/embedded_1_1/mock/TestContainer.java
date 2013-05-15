@@ -17,6 +17,7 @@
 package org.jboss.arquillian.container.weld.ee.embedded_1_1.mock;
 
 import static java.util.Arrays.asList;
+import static org.jboss.arquillian.container.weld.ee.embedded_1_1.mock.DeploymentFactory.forBeanDeploymentArchive;
 
 import java.net.URL;
 import java.util.Collection;
@@ -196,13 +197,13 @@ public class TestContainer
     */
    public TestContainer(BeansXml beansXml, Collection<Class<?>> classes)
    {
-      this(new FlatDeployment(new BeanDeploymentArchiveImpl(beansXml, classes)));
+      this(forBeanDeploymentArchive(new BeanDeploymentArchiveImpl(beansXml, classes)));
    }
 
    public TestContainer(Collection<URL> beansXml, Collection<Class<?>> classes)
    {
       this.bootstrap = new WeldBootstrap();
-      this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(bootstrap.parse(beansXml), classes));
+      this.deployment = forBeanDeploymentArchive(new BeanDeploymentArchiveImpl(bootstrap.parse(beansXml), classes));
       
    }
 
@@ -224,7 +225,7 @@ public class TestContainer
       {
          throw new RuntimeException("Could not parse beans.xml", e);
       }
-      this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(beanArchiveId, xml, classes));
+      this.deployment = forBeanDeploymentArchive(new BeanDeploymentArchiveImpl(beanArchiveId, xml, classes));
    }
 
    /**
@@ -236,12 +237,12 @@ public class TestContainer
     */
    public TestContainer(BeansXml beansXml, Class<?>... classes)
    {
-      this(new FlatDeployment(new BeanDeploymentArchiveImpl(beansXml, asList(classes))));
+      this(forBeanDeploymentArchive(new BeanDeploymentArchiveImpl(beansXml, asList(classes))));
    }
 
    public TestContainer(Class<?>... classes)
    {
-      this(new FlatDeployment(new BeanDeploymentArchiveImpl(asList(classes))));
+      this(DeploymentFactory.forBeanDeploymentArchive(new BeanDeploymentArchiveImpl(asList(classes))));
    }
 
    public TestContainer(Deployment deployment)
