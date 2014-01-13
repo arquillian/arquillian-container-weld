@@ -149,6 +149,10 @@ public class LifecycleHandler
       }
 
       BoundConversationContext conversationContext = manager.instance().select(BoundConversationContext.class).get();
+      if (!conversationContext.isActive()) {
+          // if a conversation was not activated due to an exception before calling the createConversation
+          return;
+      }
       if (!conversationContext.getCurrentConversation().isTransient())
       {
          conversationId.set(new CDIConversationID(conversationContext.getCurrentConversation().getId()));
