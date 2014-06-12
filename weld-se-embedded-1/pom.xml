@@ -21,23 +21,10 @@
     <!-- Properties -->
     <properties>
 
-        <!-- Versioning -->
-        <version.weld_core>1.0.1-SP4</version.weld_core>
+        <javax.el.version>2.2</javax.el.version>
+        <slf4j.version>1.5.10</slf4j.version>
 
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- org.jboss.weld -->
-            <dependency>
-                <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-core-bom</artifactId>
-                <version>${version.weld_core}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <!-- Dependencies -->
     <dependencies>
@@ -66,17 +53,20 @@
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-api</artifactId>
+            <version>${version.weld_api_1}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core</artifactId>
+            <version>${version.weld_core_1}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>el-api</artifactId>
+            <version>${javax.el.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -84,6 +74,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
 

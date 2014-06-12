@@ -22,11 +22,8 @@
     <properties>
 
         <!-- Versioning -->
-        <weld-core-1_1.version>1.1.13.Final</weld-core-1_1.version>
-        <weld-core-2.version>2.0.0.Final</weld-core-2.version>
-        <weld-api.version>2.0.Final</weld-api.version>
-        <javax.el.version>3.0-b08</javax.el.version>
         <cdi.api.version>1.1</cdi.api.version>
+        <javax.el.version>3.0-b08</javax.el.version>
 
     </properties>
 
@@ -69,6 +66,7 @@
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core</artifactId>
+            <version>${weld-core.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -90,6 +88,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -110,17 +109,11 @@
     <profiles>
         <profile>
             <id>1.1.x</id>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jboss.weld</groupId>
-                        <artifactId>weld-core-bom</artifactId>
-                        <version>${weld-core-1_1.version}</version>
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
+            <properties>
+                <weld-api.version>${version.weld_api_1_1}</weld-api.version>
+                <weld-core.version>${version.weld_core_1_1}</weld-core.version>
+                <slf4j.version>1.7.2</slf4j.version>
+            </properties>
             <build>
               <plugins>
                 <plugin>
@@ -140,17 +133,11 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jboss.weld</groupId>
-                        <artifactId>weld-core-bom</artifactId>
-                        <version>${weld-core-2.version}</version>
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
+            <properties>
+                <weld-api.version>${version.weld_api_2}</weld-api.version>
+                <weld-core.version>${version.weld_core_2}</weld-core.version>
+                <slf4j.version>1.7.2</slf4j.version>
+            </properties>
         </profile>
     </profiles>
 </project>

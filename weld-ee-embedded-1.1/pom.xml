@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <!-- Parent -->
     <parent>
@@ -20,11 +21,14 @@
 
     <!-- Properties -->
     <properties>
-        <weld-core-1_1.version>1.1.13.Final</weld-core-1_1.version>
-        <weld-core-2.version>2.0.0.Final</weld-core-2.version>
-        <weld-api.version>2.0.Final</weld-api.version>
         <javax.el.version>3.0-b08</javax.el.version>
         <cdi.api.version>1.1</cdi.api.version>
+
+        <jboss.spec.ejb.version>1.0.2.Final</jboss.spec.ejb.version>
+        <jboss.spec.servlet.version>1.0.2.Final</jboss.spec.servlet.version>
+        <validation.api.version>1.0.0.GA</validation.api.version>
+        <jpa.api.version>1.0</jpa.api.version>
+        <jta.api.version>1.1</jta.api.version>
     </properties>
 
     <!-- Dependencies -->
@@ -61,6 +65,7 @@
         <dependency>
             <groupId>org.jboss.weld</groupId>
             <artifactId>weld-core</artifactId>
+            <version>${weld-core.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -81,30 +86,35 @@
         <dependency>
             <groupId>org.jboss.spec.javax.servlet</groupId>
             <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+            <version>${jboss.spec.servlet.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
+            <version>${validation.api.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
+            <version>${jta.api.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
+            <version>${jpa.api.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <version>${jboss.spec.ejb.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -114,6 +124,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -139,29 +150,23 @@
     <profiles>
         <profile>
             <id>1.1.x</id>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jboss.weld</groupId>
-                        <artifactId>weld-core-bom</artifactId>
-                        <version>${weld-core-1_1.version}</version>
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
+            <properties>
+                <weld-api.version>${version.weld_api_1_1}</weld-api.version>
+                <weld-core.version>${version.weld_core_1_1}</weld-core.version>
+                <slf4j.version>1.7.2</slf4j.version>
+            </properties>
             <build>
-              <plugins>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-surefire-plugin</artifactId>
-                  <configuration>
-                    <excludes>
-                      <exclude>**/WeldEmbeddedCDIProviderTest.java</exclude>
-                    </excludes>
-                  </configuration>
-                </plugin>
-              </plugins>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/WeldEmbeddedCDIProviderTest.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
         <profile>
@@ -169,17 +174,11 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jboss.weld</groupId>
-                        <artifactId>weld-core-bom</artifactId>
-                        <version>${weld-core-2.version}</version>
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
+            <properties>
+                <weld-api.version>${version.weld_api_2}</weld-api.version>
+                <weld-core.version>${version.weld_core_2}</weld-core.version>
+                <slf4j.version>1.7.2</slf4j.version>
+            </properties>
         </profile>
     </profiles>
 </project>
