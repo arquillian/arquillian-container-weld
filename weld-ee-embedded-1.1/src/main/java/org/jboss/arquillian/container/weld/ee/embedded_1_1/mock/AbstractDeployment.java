@@ -64,8 +64,11 @@ public abstract class AbstractDeployment implements Deployment
    {
       services.add(TransactionServices.class, new MockTransactionServices());
       services.add(SecurityServices.class, new MockSecurityServices());
-      services.add(ValidationServices.class, new MockValidationServices());
       services.add(EjbServices.class, new MockEjBServices());
+      // javax.validation is an optional dependency
+      if (Utils.isClassAccessible("javax.validation.Validator", AbstractDeployment.class.getClassLoader())) {
+         services.add(ValidationServices.class, new MockValidationServices());
+      }
    }
 
    public Collection<BeanDeploymentArchive> getBeanDeploymentArchives()
