@@ -2,6 +2,7 @@ package org.jboss.arquillian.container.weld.ee.embedded_1_1.mock;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,11 @@ public class Ejbs
    
    public static Collection<EjbDescriptor<?>> createEjbDescriptors(Iterable<Class<?>> classes)
    {
+      // EJB API dependency is optional
+      if (!Utils.isClassAccessible("javax.ejb.Singleton", Ejbs.class.getClassLoader()))
+      {
+         return Collections.emptySet();
+      }
       List<EjbDescriptor<?>> ejbs = new ArrayList<EjbDescriptor<?>>();
       for (Class<?> ejbClass : findEjbs(classes))
       {
@@ -30,7 +36,7 @@ public class Ejbs
    }
    
    
-   public static Iterable<Class<?>> findEjbs(Iterable<Class<?>> classes)
+   private static Iterable<Class<?>> findEjbs(Iterable<Class<?>> classes)
    {
       Set<Class<?>> ejbs = new HashSet<Class<?>>();
       for (Class<?> clazz : classes)
