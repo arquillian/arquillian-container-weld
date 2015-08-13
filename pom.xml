@@ -36,10 +36,10 @@
         <version.weld_core_1>1.0.1-SP4</version.weld_core_1>
 
         <version.weld_api_1_1>2.0.Final</version.weld_api_1_1>
-        <version.weld_core_1_1>1.1.17.SP3</version.weld_core_1_1>
+        <version.weld_core_1_1>1.1.31.Final</version.weld_core_1_1>
 
-        <version.weld_api_2>2.2.SP1</version.weld_api_2>
-        <version.weld_core_2>2.2.1.Final</version.weld_core_2>
+        <version.weld_api_2>2.2.SP4</version.weld_api_2>
+        <version.weld_core_2>2.2.15.Final</version.weld_core_2>
 
         <!-- override from parent -->
         <maven.compiler.argument.target>1.5</maven.compiler.argument.target>
