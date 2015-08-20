@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc., and individual contributors
+ * Copyright 2015, Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -16,27 +16,27 @@
  */
 package org.jboss.arquillian.container.weld.ee.embedded_1_1.mock;
 
-import javax.enterprise.inject.spi.InjectionPoint;
-
-import org.jboss.weld.injection.spi.EjbInjectionServices;
+import org.jboss.weld.injection.spi.ResourceReference;
 import org.jboss.weld.injection.spi.ResourceReferenceFactory;
 
-/**
- * @author pmuir
- *
- */
-public class MockEjbInjectionServices implements EjbInjectionServices
+public class MockResourceReferenceFactory implements ResourceReferenceFactory<Object>
 {
 
-   public Object resolveEjb(InjectionPoint injectionPoint)
+   @SuppressWarnings("unchecked")
+   public static <T> ResourceReferenceFactory<T> instance() {
+      return (ResourceReferenceFactory<T>) INSTANCE;
+   }
+
+   private static final MockResourceReferenceFactory INSTANCE = new MockResourceReferenceFactory();
+
+   private MockResourceReferenceFactory()
+   {
+   }
+
+   @Override
+   public ResourceReference<Object> createResource()
    {
       return null;
    }
-   
-   public void cleanup() {}
 
-   @Override
-   public ResourceReferenceFactory<Object> registerEjbInjectionPoint(InjectionPoint injectionPoint) {
-      return MockResourceReferenceFactory.instance();
-   }
 }

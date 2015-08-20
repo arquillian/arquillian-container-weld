@@ -42,11 +42,11 @@ public class MockResourceInjectionServices implements ResourceInjectionServices
 
    @Override
    public ResourceReferenceFactory<Object> registerResourceInjectionPoint(InjectionPoint injectionPoint) {
-      return null;
+      return MockResourceReferenceFactory.instance();
    }
 
    @Override
    public ResourceReferenceFactory<Object> registerResourceInjectionPoint(String jndiName, String mappedName) {
-      return null;
+      return MockResourceReferenceFactory.instance();
    }
 }
