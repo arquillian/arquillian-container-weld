@@ -29,6 +29,16 @@ public class MockResourceReferenceFactory implements ResourceReferenceFactory<Ob
 
    private static final MockResourceReferenceFactory INSTANCE = new MockResourceReferenceFactory();
 
+   private static final ResourceReference<Object> EMPTY_RESOURCE_REFERENCE = new ResourceReference<Object>() {
+
+        public void release() {
+        }
+
+        public Object getInstance() {
+            return null;
+        }
+   };
+
    private MockResourceReferenceFactory()
    {
    }
@@ -36,7 +46,7 @@ public class MockResourceReferenceFactory implements ResourceReferenceFactory<Ob
    @Override
    public ResourceReference<Object> createResource()
    {
-      return null;
+      return EMPTY_RESOURCE_REFERENCE;
    }
 
 }
