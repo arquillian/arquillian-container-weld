@@ -33,5 +33,7 @@ public class WeldExtension implements LoadableExtension
    {
       builder.service(DeployableContainer.class, WeldEEMockContainer.class)
              .observer(LifecycleHandler.class);
+      
+      builder.observer(JpaLifecycleEventExecuter.class);
    }
 }
