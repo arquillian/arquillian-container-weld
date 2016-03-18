@@ -38,6 +38,9 @@ import org.jboss.weld.bootstrap.api.Environments;
 import org.jboss.weld.bootstrap.api.ServiceRegistry;
 import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
 import org.jboss.weld.bootstrap.spi.Metadata;
+import org.jboss.weld.config.ConfigurationKey;
+import org.jboss.weld.configuration.spi.ExternalConfiguration;
+import org.jboss.weld.configuration.spi.helpers.ExternalConfigurationBuilder;
 import org.jboss.weld.manager.api.WeldManager;
 import org.jboss.weld.util.ServiceLoader;
 
@@ -132,7 +135,13 @@ public class WeldSEContainer implements DeployableContainer<WeldSEConfiguration>
       
       WeldBootstrap bootstrap = new WeldBootstrap();
       beanArchive.setBootstrap(bootstrap);
-      
+
+      ExternalConfigurationBuilder configurationBuilder = new ExternalConfigurationBuilder()
+          // Use relaxed construction by default
+          .add(ConfigurationKey.RELAXED_CONSTRUCTION.get(), true);
+      deployment.getServices()
+          .add(ExternalConfiguration.class, configurationBuilder.build());
+
       bootstrap.startContainer(Environments.SE, deployment)
                   .startInitialization()
                   .deployBeans()
