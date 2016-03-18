@@ -42,6 +42,8 @@
         <version.weld_api_2>2.2.SP4</version.weld_api_2>
         <version.weld_core_2>2.2.15.Final</version.weld_core_2>
 
+        <slf4j.version>1.7.2</slf4j.version>
+
         <!-- override from parent -->
         <maven.compiler.argument.target>1.5</maven.compiler.argument.target>
         <maven.compiler.argument.source>1.5</maven.compiler.argument.source>
@@ -82,9 +84,10 @@
 
     <modules>
         <module>weld-ee-embedded-1.1</module>
-
+        <module>weld-se-embedded</module>
         <module>weld-se-embedded-1</module>
         <module>weld-se-embedded-1.1</module>
+        <module>weld-se-embedded-2.1</module>
     </modules>
 
 </project>

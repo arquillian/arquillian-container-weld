@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <!-- Parent -->
     <parent>
         <groupId>org.jboss.arquillian.container</groupId>
         <artifactId>arquillian-parent-weld</artifactId>
@@ -9,16 +8,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <!-- Model Version -->
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Artifact Configuration -->
     <artifactId>arquillian-weld-se-embedded-1</artifactId>
     <name>Arquillian Container Weld SE Embedded 1.x</name>
     <description>Weld SE 1.x Embedded Container integration for the Arquillian Project</description>
 
-
-    <!-- Properties -->
     <properties>
 
         <javax.el.version>2.2</javax.el.version>
@@ -26,8 +21,27 @@
 
     </properties>
 
-    <!-- Dependencies -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <dependenciesToScan>
+                        <dependency>org.jboss.arquillian.container:arquillian-weld-se-embedded</dependency>
+                    </dependenciesToScan>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-se-embedded</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- org.jboss.arquillian -->
         <dependency>
@@ -71,6 +85,15 @@
         </dependency>
 
         <!-- Test dependencies -->
+
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-se-embedded</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>

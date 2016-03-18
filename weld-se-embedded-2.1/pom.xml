@@ -10,17 +10,17 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>arquillian-weld-se-embedded-1.1</artifactId>
-    <name>Arquillian Container Weld SE Embedded 1.1.x</name>
-    <description>Weld SE 1.1.x Embedded Container integration for the Arquillian Project</description>
+    <artifactId>arquillian-weld-se-embedded-2.1</artifactId>
+    <name>Arquillian Container Weld SE Embedded 2.1.x</name>
+    <description>Weld SE 2.1.x Embedded Container integration for the Arquillian Project</description>
 
     <properties>
 
         <cdi.api.version>1.1</cdi.api.version>
         <javax.el.version>3.0-b08</javax.el.version>
 
-        <weld-api.version>${version.weld_api_1_1}</weld-api.version>
-        <weld-core.version>${version.weld_core_1_1}</weld-core.version>
+        <weld-api.version>${version.weld_api_2}</weld-api.version>
+        <weld-core.version>${version.weld_core_2}</weld-core.version>
 
     </properties>
 
@@ -101,7 +101,6 @@
         </dependency>
 
         <!-- Test dependencies -->
-
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-weld-se-embedded</artifactId>

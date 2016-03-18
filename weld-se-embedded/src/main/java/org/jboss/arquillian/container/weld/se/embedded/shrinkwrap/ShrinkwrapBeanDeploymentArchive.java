@@ -14,37 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_1;
+package org.jboss.arquillian.container.weld.se.embedded.shrinkwrap;
 
-import org.jboss.arquillian.container.weld.se.embedded.WeldSEBaseContainer;
+import org.jboss.shrinkwrap.api.Assignable;
+import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
 import org.jboss.weld.bootstrap.api.Bootstrap;
-import org.jboss.weld.bootstrap.api.Environments;
-import org.jboss.weld.bootstrap.spi.Deployment;
-import org.jboss.weld.context.api.helpers.ConcurrentHashMapBeanStore;
+import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
 
 /**
- * WeldSEContainer
+ * ShrinkwrapBeanDeploymentArchive
  *
  * @author <a href="mailto:aslak@conduct.no">Aslak Knutsen</a>
  * @version $Revision: $
  */
-class WeldSEContainer extends WeldSEBaseContainer
+public interface ShrinkwrapBeanDeploymentArchive extends BeanDeploymentArchive, Assignable
 {
-
-   @Override
-   public Deployment createDeployment(org.jboss.arquillian.container.weld.se.embedded.shrinkwrap.ShrinkwrapBeanDeploymentArchive beanArchive)
-   {
-      return new WeldSE10Deployment(beanArchive);
-   }
-
-   @Override
-   public void startContainer(Bootstrap bootstrap, Deployment deployment)
-   {
-      bootstrap.startContainer(Environments.SE, deployment, new ConcurrentHashMapBeanStore())
-          .startInitialization()
-          .deployBeans()
-          .validateBeans()
-          .endInitialization();
-   }
-
+   ShrinkWrapClassLoader getClassLoader();
+   
+   void setBootstrap(Bootstrap bootstrap);
 }

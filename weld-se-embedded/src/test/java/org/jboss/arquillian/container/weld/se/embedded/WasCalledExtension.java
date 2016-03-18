@@ -15,22 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_1_1;
+package org.jboss.arquillian.container.weld.se.embedded;
 
-import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.container.weld.se.embedded.WeldSEBaseContainer;
-import org.jboss.arquillian.core.spi.LoadableExtension;
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.spi.BeforeBeanDiscovery;
+import javax.enterprise.inject.spi.Extension;
 
 /**
- * WeldExtension
+ * TestExtension
  *
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
  * @version $Revision: $
  */
-public class WeldExtension implements LoadableExtension
+public class WasCalledExtension implements Extension
 {
-   public void register(ExtensionBuilder builder)
+   public static boolean wasCalled = false;
+   
+   public void test(@Observes BeforeBeanDiscovery test)
    {
-      builder.service(DeployableContainer.class, WeldSEBaseContainer.class);
+      wasCalled = true;
    }
 }
