@@ -1,13 +1,13 @@
-/**
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+/*
+ * JBoss, Home of Professional Open Source
+ * Copyright 2009, Red Hat Middleware LLC, and individual contributors
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,17 +31,20 @@ import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.CDI;
 
 @RunWith(Arquillian.class)
-public class WeldEmbeddedMultipleDeploymentTest {
+public class WeldEmbeddedMultipleDeploymentTest
+{
 
     @Deployment
-    public static Archive<?> defaultDeployment() {
+    public static Archive<?> defaultDeployment()
+    {
         return ShrinkWrap.create(JavaArchive.class)
             // Bean archive deployment descriptor
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
     @Deployment(name = "foo")
-    public static Archive<?> fooDeployment() {
+    public static Archive<?> fooDeployment()
+    {
         return ShrinkWrap.create(JavaArchive.class)
             // Test classes
             .addClass(FooService.class)
@@ -50,7 +53,8 @@ public class WeldEmbeddedMultipleDeploymentTest {
     }
 
     @Deployment(name = "bar")
-    public static Archive<?> barDeployment() {
+    public static Archive<?> barDeployment()
+    {
         return ShrinkWrap.create(JavaArchive.class)
             // Test classes
             .addClass(BarService.class)
@@ -59,38 +63,47 @@ public class WeldEmbeddedMultipleDeploymentTest {
     }
 
     @Test
-    public void shouldGetNoServiceFromDefaultDeployment(Instance<Service> service) throws Exception {
+    public void shouldGetNoServiceFromDefaultDeployment(Instance<Service> service)
+    {
         Assert.assertTrue(service.isUnsatisfied());
         Assert.assertTrue(CDI.current().select(Service.class).isUnsatisfied());
     }
 
     @Test
     @OperateOnDeployment("foo")
-    public void shouldGetServiceFromFooDeployment(Service service) throws Exception {
+    public void shouldGetServiceFromFooDeployment(Service service)
+    {
         Assert.assertEquals("foo", service.getName());
     }
 
     @Test
     @OperateOnDeployment("bar")
-    public void shouldGetServiceFromBarDeployment(Service service) throws Exception {
+    public void shouldGetServiceFromBarDeployment(Service service)
+    {
         Assert.assertEquals("bar", service.getName());
     }
 }
 
-interface Service {
+interface Service
+{
 
     String getName();
 }
 
-class FooService implements Service {
+class FooService implements Service
+{
 
-    public String getName() {
+    public String getName()
+    {
         return "foo";
     }
 }
-class BarService implements Service {
 
-    public String getName() {
+class BarService implements Service
+{
+
+    public String getName()
+    {
         return "bar";
     }
 }

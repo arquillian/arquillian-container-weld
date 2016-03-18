@@ -16,34 +16,17 @@
  */
 package org.jboss.arquillian.container.weld.se.embedded_2_1;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.inject.spi.Extension;
-
-import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
-import org.jboss.arquillian.container.spi.client.container.DeploymentException;
-import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.deployment.DeploymentDescription;
-import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
-import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
-import org.jboss.arquillian.container.weld.se.embedded_2_1.shrinkwrap.ShrinkwrapBeanDeploymentArchive;
+import org.jboss.arquillian.container.weld.se.embedded.WeldSEBaseContainer;
 import org.jboss.arquillian.core.api.Instance;
-import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.descriptor.api.Descriptor;
-import org.jboss.weld.bootstrap.WeldBootstrap;
+import org.jboss.weld.bootstrap.api.Bootstrap;
+import org.jboss.weld.bootstrap.api.CDI11Bootstrap;
 import org.jboss.weld.bootstrap.api.Environments;
-import org.jboss.weld.bootstrap.api.ServiceRegistry;
 import org.jboss.weld.bootstrap.api.SingletonProvider;
 import org.jboss.weld.bootstrap.api.helpers.RegistrySingletonProvider;
-import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
-import org.jboss.weld.bootstrap.spi.Metadata;
-import org.jboss.weld.manager.api.WeldManager;
-import org.jboss.weld.util.ServiceLoader;
+import org.jboss.weld.bootstrap.spi.Deployment;
 
 /**
  * WeldSEContainer
@@ -51,131 +34,42 @@ import org.jboss.weld.util.ServiceLoader;
  * @author <a href="mailto:aslak@conduct.no">Aslak Knutsen</a>
  * @version $Revision: $
  */
-public class WeldSEContainer implements DeployableContainer<WeldSEConfiguration>
+class WeldSEContainer extends WeldSEBaseContainer
 {
-   static {
+   static
+   {
       // Initialize Weld container registry
       SingletonProvider.initialize(new RegistrySingletonProvider());
    }
 
-   @Inject @DeploymentScoped
-   private InstanceProducer<ContextClassLoaderManager> classLoaderManagerInst;
-   
-   @Inject @DeploymentScoped
-   private InstanceProducer<WeldManager> weldManagerInst;
-
-   // ContextLookup is Strict typed, so we have to expose WeldManager for LifeCycleHandler and BeanManager for CDIEnrichment
-   @Inject @DeploymentScoped
-   private InstanceProducer<BeanManager> beanManagerInst;
-
-   @Inject @DeploymentScoped
-   private InstanceProducer<WeldBootstrap> weldBootstrapInst;
-
-   @Inject @DeploymentScoped
+   @Inject
+   @DeploymentScoped
    private Instance<DeploymentDescription> deploymentDescription;
 
-   public ProtocolDescription getDefaultProtocol()
+   @Override
+   public void startContainer(Bootstrap bootstrap, Deployment deployment)
    {
-      return new ProtocolDescription("Local");
-   }
-   
-   public Class<WeldSEConfiguration> getConfigurationClass()
-   {
-      return WeldSEConfiguration.class;
-   }
-   
-   public void setup(WeldSEConfiguration configuration)
-   {
-   }
-   
-   public void start() throws LifecycleException
-   {
-   }
-
-   public void stop() throws LifecycleException
-   {
-   }
-   
-   public void deploy(Descriptor descriptor) throws DeploymentException
-   {
-      throw new UnsupportedOperationException("Descriptors not supported by Weld");
-   }
-   
-   public void undeploy(Descriptor descriptor) throws DeploymentException
-   {
-      throw new UnsupportedOperationException("Descriptors not supported by Weld");      
-   }
-
-   public ProtocolMetaData deploy(Archive<?> archive) throws DeploymentException
-   {
-      final ShrinkwrapBeanDeploymentArchive beanArchive = archive.as(ShrinkwrapBeanDeploymentArchive.class);
-
-      final org.jboss.weld.bootstrap.spi.Deployment deployment = new org.jboss.weld.bootstrap.spi.Deployment() 
+      if ("_DEFAULT_".equals(deploymentDescription.get().getName()))
       {
-         public Collection<BeanDeploymentArchive> getBeanDeploymentArchives()
-         {
-            return Arrays.asList((BeanDeploymentArchive)beanArchive);
-         }
-         
-         public ServiceRegistry getServices()
-         {
-            return beanArchive.getServices();
-         }
-         
-         public BeanDeploymentArchive loadBeanDeploymentArchive(	
-               Class<?> beanClass)
-         {
-            return beanArchive;
-         }
-         
-         /* (non-Javadoc)
-          * @see org.jboss.weld.bootstrap.spi.Deployment#getExtensions()
-          */
-         public Iterable<Metadata<Extension>> getExtensions()
-         {
-            return ServiceLoader.load(Extension.class, beanArchive.getClassLoader());
-         }
-      };
-      
-      ContextClassLoaderManager classLoaderManager = new ContextClassLoaderManager(beanArchive.getClassLoader());
-      classLoaderManager.enable();
-
-      classLoaderManagerInst.set(classLoaderManager);
-      
-      WeldBootstrap bootstrap = new WeldBootstrap();
-      beanArchive.setBootstrap(bootstrap);
-
-      if ("_DEFAULT_".equals(deploymentDescription.get().getName())) {
          bootstrap.startContainer(Environments.SE, deployment)
              .startInitialization()
              .deployBeans()
              .validateBeans()
              .endInitialization();
-      } else {
-         bootstrap.startContainer(deploymentDescription.get().getName(), Environments.SE, deployment)
+      }
+      else
+      {
+         if (!(bootstrap instanceof CDI11Bootstrap))
+         {
+            throw new RuntimeException("Bootstrap is not CDI 1.1 compatible!");
+         }
+
+         // Support for multiple @Deployment methods
+         ((CDI11Bootstrap) bootstrap).startContainer(deploymentDescription.get().getName(), Environments.SE, deployment)
              .startInitialization()
              .deployBeans()
              .validateBeans()
              .endInitialization();
       }
-
-      WeldManager manager = bootstrap.getManager(beanArchive);
-      
-      weldBootstrapInst.set(bootstrap);
-      weldManagerInst.set(manager);
-      beanManagerInst.set(manager);
-      
-      return new ProtocolMetaData();
-   }
-
-   public void undeploy(Archive<?> archive) throws DeploymentException
-   {
-      WeldBootstrap bootstrap = weldBootstrapInst.get();
-      if(bootstrap != null)
-      {
-         bootstrap.shutdown();
-      }
-      ContextClassLoaderManager classLoaderManager = classLoaderManagerInst.get();
-      classLoaderManager.disable();
    }
 }

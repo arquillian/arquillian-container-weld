@@ -14,40 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.arquillian.container.weld.se.embedded_2_1;
+package org.jboss.arquillian.container.weld.se.embedded;
 
+import junit.framework.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.weld.se.embedded.beans.MyBean;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.enterprise.inject.spi.CDI;
+import javax.enterprise.inject.spi.Extension;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-
+/**
+ * WeldEmbeddedIntegrationTestCase
+ *
+ * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
+ * @version $Revision: $
+ */
 @RunWith(Arquillian.class)
-public class WeldEmbeddedCdiProviderTest
+public class WeldEmbeddedExtensionTestCase
 {
-
-    @Deployment
-    public static JavaArchive createTestArchive()
-    {
-        return ShrinkWrap.create(JavaArchive.class)
-            .addClasses(WeldEmbeddedCdiProviderTest.class, MyBean.class)
-            .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
-    }
-
-    @Test
-    public void testCDIProvider()
-    {
-        assertNotNull(CDI.current().getBeanManager());
-        assertEquals("aslak", CDI.current().select(MyBean.class).get().getName());
-    }
+   @Deployment
+   public static JavaArchive createDeployment()
+   {
+      return ShrinkWrap.create(JavaArchive.class)
+                  .addClasses(WasCalledExtension.class)
+                  .addAsServiceProvider(Extension.class, WasCalledExtension.class)
+                  .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+   }
+   
+   @Test
+   public void shouldBeAbleToInjectBeanAsInstanceVariable() throws Exception 
+   {
+      Assert.assertTrue("Extension should have been loaded", WasCalledExtension.wasCalled);
+   }
 }

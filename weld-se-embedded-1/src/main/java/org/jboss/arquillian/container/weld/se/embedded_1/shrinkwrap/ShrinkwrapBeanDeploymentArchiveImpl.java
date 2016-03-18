@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.arquillian.container.weld.se.embedded.shrinkwrap.ShrinkwrapBeanDeploymentArchive;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Assignable;
@@ -34,6 +35,7 @@ import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.classloader.ShrinkWrapClassLoader;
 import org.jboss.shrinkwrap.impl.base.Validate;
+import org.jboss.weld.bootstrap.api.Bootstrap;
 import org.jboss.weld.bootstrap.api.ServiceRegistry;
 import org.jboss.weld.bootstrap.api.helpers.SimpleServiceRegistry;
 import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
@@ -45,7 +47,7 @@ import org.jboss.weld.ejb.spi.EjbDescriptor;
  * @author <a href="mailto:aslak@conduct.no">Aslak Knutsen</a>
  * @version $Revision: $
  */
-public class ShrinkwrapBeanDeploymentArchiveImpl implements ShrinkwrapBeanDeploymentArchive, Assignable 
+public class ShrinkwrapBeanDeploymentArchiveImpl implements ShrinkwrapBeanDeploymentArchive, Assignable
 {
    private Archive<?> archive;
    
@@ -70,7 +72,12 @@ public class ShrinkwrapBeanDeploymentArchiveImpl implements ShrinkwrapBeanDeploy
    {
       return classLoader;
    }
-   
+
+   public void setBootstrap(Bootstrap bootstrap)
+   {
+
+   }
+
    public Collection<URL> getBeansXml()
    {
       List<URL> beanClasses = new ArrayList<URL>();

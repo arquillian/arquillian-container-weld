@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <!-- Parent -->
     <parent>
         <groupId>org.jboss.arquillian.container</groupId>
         <artifactId>arquillian-parent-weld</artifactId>
@@ -9,26 +8,43 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <!-- Model Version -->
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Artifact Configuration -->
     <artifactId>arquillian-weld-se-embedded-2.1</artifactId>
     <name>Arquillian Container Weld SE Embedded 2.1.x</name>
     <description>Weld SE 2.1.x Embedded Container integration for the Arquillian Project</description>
 
-
-    <!-- Properties -->
     <properties>
 
-        <!-- Versioning -->
         <cdi.api.version>1.1</cdi.api.version>
         <javax.el.version>3.0-b08</javax.el.version>
 
+        <weld-api.version>${version.weld_api_2}</weld-api.version>
+        <weld-core.version>${version.weld_core_2}</weld-core.version>
+
     </properties>
 
-    <!-- Dependencies -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <dependenciesToScan>
+                        <dependency>org.jboss.arquillian.container:arquillian-weld-se-embedded</dependency>
+                    </dependenciesToScan>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-se-embedded</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!-- org.jboss.arquillian -->
         <dependency>
@@ -86,6 +102,14 @@
 
         <!-- Test dependencies -->
         <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-se-embedded</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
@@ -106,17 +130,4 @@
 
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>2.x</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <weld-api.version>${version.weld_api_2}</weld-api.version>
-                <weld-core.version>${version.weld_core_2}</weld-core.version>
-                <slf4j.version>1.7.2</slf4j.version>
-            </properties>
-        </profile>
-    </profiles>
 </project>

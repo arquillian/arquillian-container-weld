@@ -28,7 +28,6 @@ import org.jboss.arquillian.core.spi.LoadableExtension;
  */
 public class WeldExtension implements LoadableExtension
 {
-   @Override
    public void register(ExtensionBuilder builder)
    {
       builder.service(DeployableContainer.class, WeldSEContainer.class);
