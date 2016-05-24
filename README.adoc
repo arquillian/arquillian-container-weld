@@ -1,0 +1,16 @@
+== Arquillian-container-Weld
+
+Arquillian Weld embedded container is for basic testing where you can use Weld/CDI features.
+Note that this container uses flat deployment structure which means that all bean deployment archives (as well as beans xml files) are merged to one single test bean deployment archive.
+Mock EE services (like EjbServices and JpaInjectionServices) are not enabled by default and you can enable them by changing Weld environment value (see https://github.com/weld/api/blob/master/weld-spi/src/main/java/org/jboss/weld/bootstrap/api/Environments.java)
+either programmatically by passing environment parameter to `TestContainer` (or `FlatDeployment` or `BeanDeploymentArchiveImpl`) or you can use configuration property.
+
+=== Conifguration properties
+[cols="3*", options="header"]
+|===
+| *Name* | *Description* | *Default value*
+| *enableConversationScope* | enable Conversation scope | false
+| *environment* | set Weld environment | SE
+|===
+
+
