@@ -35,6 +35,7 @@ import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
 import org.jboss.weld.bootstrap.spi.CDI11Deployment;
 import org.jboss.weld.bootstrap.spi.Metadata;
 import org.jboss.weld.ejb.spi.EjbServices;
+import org.jboss.weld.security.spi.SecurityServices;
 import org.jboss.weld.transaction.spi.TransactionServices;
 
 public class FlatDeployment implements CDI11Deployment {
@@ -65,6 +66,7 @@ public class FlatDeployment implements CDI11Deployment {
         services.add(TransactionServices.class, new MockTransactionServices());
         if (environment.equals(Environments.EE) || environment.equals(Environments.EE_INJECT)) {
             services.add(EjbServices.class, new MockEjBServices());
+            services.add(SecurityServices.class, new MockSecurityServices());
         }
     }
 
