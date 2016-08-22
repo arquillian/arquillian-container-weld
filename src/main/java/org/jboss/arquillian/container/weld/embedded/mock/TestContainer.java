@@ -36,7 +36,6 @@ import org.jboss.weld.bootstrap.spi.Deployment;
 import org.jboss.weld.context.RequestContext;
 import org.jboss.weld.context.bound.BoundSessionContext;
 import org.jboss.weld.context.unbound.UnboundLiteral;
-import org.jboss.weld.environment.se.events.ContainerInitialized;
 import org.jboss.weld.literal.DestroyedLiteral;
 import org.jboss.weld.literal.InitializedLiteral;
 import org.jboss.weld.manager.api.WeldManager;
@@ -163,7 +162,7 @@ public class TestContainer {
 
     private final Deployment deployment;
     private final Bootstrap bootstrap;
-    private Environment environment;
+    private Environment environment = Environments.SE;
 
     private Map<String, Object> sessionStore;
 
@@ -249,7 +248,7 @@ public class TestContainer {
                 .endInitialization();
         if (environment.equals(Environments.SE)) {
             for (BeanDeploymentArchive beanDeploymentArchive : deployment.getBeanDeploymentArchives()) {
-                bootstrap.getManager(beanDeploymentArchive).fireEvent(new ContainerInitialized(beanDeploymentArchive.getId()), InitializedLiteral.APPLICATION);
+                bootstrap.getManager(beanDeploymentArchive).fireEvent(new Object(), InitializedLiteral.APPLICATION);
             }
         }
         return this;
@@ -284,7 +283,7 @@ public class TestContainer {
 
         if (environment.equals(Environments.SE)) {
             for (BeanDeploymentArchive beanDeploymentArchive : deployment.getBeanDeploymentArchives()) {
-                bootstrap.getManager(beanDeploymentArchive).fireEvent(new ContainerInitialized(beanDeploymentArchive.getId()), DestroyedLiteral.APPLICATION);
+                bootstrap.getManager(beanDeploymentArchive).fireEvent(new Object(), DestroyedLiteral.APPLICATION);
             }
         }
         bootstrap.shutdown();
