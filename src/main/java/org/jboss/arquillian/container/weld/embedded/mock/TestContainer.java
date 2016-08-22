@@ -36,6 +36,9 @@ import org.jboss.weld.bootstrap.spi.Deployment;
 import org.jboss.weld.context.RequestContext;
 import org.jboss.weld.context.bound.BoundSessionContext;
 import org.jboss.weld.context.unbound.UnboundLiteral;
+import org.jboss.weld.environment.se.events.ContainerInitialized;
+import org.jboss.weld.literal.DestroyedLiteral;
+import org.jboss.weld.literal.InitializedLiteral;
 import org.jboss.weld.manager.api.WeldManager;
 import static java.util.Arrays.asList;
 
@@ -160,6 +163,7 @@ public class TestContainer {
 
     private final Deployment deployment;
     private final Bootstrap bootstrap;
+    private Environment environment;
 
     private Map<String, Object> sessionStore;
 
@@ -236,12 +240,18 @@ public class TestContainer {
      */
     public TestContainer startContainer(Environment environment) {
         this.sessionStore = new HashMap<String, Object>();
+        this.environment = environment;
         bootstrap
                 .startContainer(environment, deployment)
                 .startInitialization()
                 .deployBeans()
                 .validateBeans()
                 .endInitialization();
+        if (environment.equals(Environments.SE)) {
+            for (BeanDeploymentArchive beanDeploymentArchive : deployment.getBeanDeploymentArchives()) {
+                bootstrap.getManager(beanDeploymentArchive).fireEvent(new ContainerInitialized(beanDeploymentArchive.getId()), InitializedLiteral.APPLICATION);
+            }
+        }
         return this;
     }
 
@@ -272,8 +282,12 @@ public class TestContainer {
             sessionContext.dissociate(sessionStore);
         }
 
+        if (environment.equals(Environments.SE)) {
+            for (BeanDeploymentArchive beanDeploymentArchive : deployment.getBeanDeploymentArchives()) {
+                bootstrap.getManager(beanDeploymentArchive).fireEvent(new ContainerInitialized(beanDeploymentArchive.getId()), DestroyedLiteral.APPLICATION);
+            }
+        }
         bootstrap.shutdown();
-
         return this;
     }
 
