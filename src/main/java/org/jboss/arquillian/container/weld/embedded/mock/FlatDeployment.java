@@ -63,8 +63,8 @@ public class FlatDeployment implements CDI11Deployment {
     }
 
     protected void configureServices(Environment environment) {
-        services.add(TransactionServices.class, new MockTransactionServices());
         if (environment.equals(Environments.EE) || environment.equals(Environments.EE_INJECT)) {
+            services.add(TransactionServices.class, new MockTransactionServices());
             services.add(EjbServices.class, new MockEjBServices());
             services.add(SecurityServices.class, new MockSecurityServices());
         }
