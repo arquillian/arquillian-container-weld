@@ -139,7 +139,6 @@
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>${jta.api.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
