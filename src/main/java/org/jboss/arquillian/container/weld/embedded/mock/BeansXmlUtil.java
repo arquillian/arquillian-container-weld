@@ -16,27 +16,24 @@
  */
 package org.jboss.arquillian.container.weld.embedded.mock;
 
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
-import org.jboss.weld.bootstrap.api.Bootstrap;
 import org.jboss.weld.bootstrap.spi.BeansXml;
 import org.jboss.weld.bootstrap.spi.Metadata;
+import org.jboss.weld.xml.BeansXmlParser;
 
 public final class BeansXmlUtil {
 
     private BeansXmlUtil() {
     }
 
-    public static BeansXml prepareBeansXml(Bootstrap bootstrap, Collection<URL> beansXml, boolean merge) throws Exception {
+    public static BeansXml prepareBeansXml(BeansXmlParser beansXmlParser, Collection<URL> beansXml, boolean merge) {
         if (merge) {
-            Method parseWithMerge = Bootstrap.class.getMethod("parse", new Class[] { Iterable.class, Boolean.TYPE });
-            return (BeansXml) parseWithMerge.invoke(bootstrap, new Object[] { beansXml, true });
-
+           return beansXmlParser.parse(beansXml, true);
         }
-        return bootstrap.parse(beansXml);
+        return beansXmlParser.parse(beansXml);
     }
 
     @SuppressWarnings("unchecked")

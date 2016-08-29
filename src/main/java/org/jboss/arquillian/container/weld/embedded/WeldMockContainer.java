@@ -25,6 +25,7 @@ import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.spi.context.annotation.ContainerScoped;
 import org.jboss.arquillian.container.spi.context.annotation.DeploymentScoped;
+import org.jboss.arquillian.container.weld.embedded.mock.BeansXmlUtil;
 import org.jboss.arquillian.container.weld.embedded.mock.TestContainer;
 import org.jboss.arquillian.core.api.InstanceProducer;
 import org.jboss.arquillian.core.api.annotation.Inject;
@@ -34,10 +35,16 @@ import org.jboss.shrinkwrap.descriptor.api.Descriptor;
 import org.jboss.weld.bootstrap.api.Bootstrap;
 import org.jboss.weld.bootstrap.api.Environment;
 import org.jboss.weld.bootstrap.api.Environments;
+import org.jboss.weld.bootstrap.api.ServiceRegistry;
+import org.jboss.weld.bootstrap.api.helpers.SimpleServiceRegistry;
+import org.jboss.weld.bootstrap.spi.BeansXml;
 import org.jboss.weld.manager.api.WeldManager;
 import static org.jboss.arquillian.container.weld.embedded.Utils.findArchiveId;
 import static org.jboss.arquillian.container.weld.embedded.Utils.findBeanClasses;
 import static org.jboss.arquillian.container.weld.embedded.Utils.findBeansXml;
+import org.jboss.weld.resources.ClassLoaderResourceLoader;
+import org.jboss.weld.resources.spi.ResourceLoader;
+import org.jboss.weld.xml.BeansXmlParser;
 
 /**
  * WeldEEMockConainer
@@ -71,6 +78,7 @@ public class WeldMockContainer implements DeployableContainer<WeldMockConfigurat
     @Inject @DeploymentScoped
     private InstanceProducer<ContextClassLoaderManager> contextClassLoaderManagerProducer;
 
+    private ServiceRegistry serviceRegistry;
     public ProtocolDescription getDefaultProtocol() {
         return new ProtocolDescription("Local");
     }
@@ -87,12 +95,18 @@ public class WeldMockContainer implements DeployableContainer<WeldMockConfigurat
     }
 
     public ProtocolMetaData deploy(Archive<?> archive) throws DeploymentException {
-        ShrinkWrapClassLoader classLoader = getClassLoader(archive);
+        final ShrinkWrapClassLoader classLoader = getClassLoader(archive);
         ContextClassLoaderManager classLoaderManager = new ContextClassLoaderManager(classLoader);
         classLoaderManager.enable();
 
+        serviceRegistry = new SimpleServiceRegistry();
+        serviceRegistry.add(ResourceLoader.class, new ClassLoaderResourceLoader(classLoader));
+
+        BeansXmlParser beansXmlParser = new BeansXmlParser();
+        BeansXml beansXml = BeansXmlUtil.prepareBeansXml(beansXmlParser, findBeansXml(archive), true);
         Environment environment = Environments.valueOf(configuration.get().getEnvironment());
-        TestContainer container = new TestContainer(findArchiveId(archive), findBeansXml(archive), findBeanClasses(archive, classLoader), environment, true);
+        TestContainer container = new TestContainer(findArchiveId(archive), beansXml,
+                findBeanClasses(archive, classLoader, beansXml, serviceRegistry.get(ResourceLoader.class)), environment, true);
         Bootstrap bootstrap = container.getBootstrap();
 
         contextClassLoaderManagerProducer.set(classLoaderManager);
