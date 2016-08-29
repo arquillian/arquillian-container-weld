@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 
@@ -35,6 +34,11 @@ import org.jboss.shrinkwrap.api.ArchivePath;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.Node;
 import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
+import org.jboss.weld.bootstrap.spi.BeansXml;
+import org.jboss.weld.bootstrap.spi.Filter;
+import org.jboss.weld.bootstrap.spi.Metadata;
+import org.jboss.weld.metadata.FilterPredicate;
+import org.jboss.weld.resources.spi.ResourceLoader;
 
 /**
  * BeanUtils
@@ -124,7 +128,7 @@ final class Utils {
         return beansXmls;
     }
 
-    public static Collection<Class<?>> findBeanClasses(Archive<?> archive, ClassLoader classLoader) {
+    public static Collection<Class<?>> findBeanClasses(Archive<?> archive, ClassLoader classLoader, BeansXml beansXml, ResourceLoader resourceLoader) {
         Validate.notNull(archive, "Archive must be specified");
         List<Class<?>> beanClasses = new ArrayList<Class<?>>();
 
@@ -140,23 +144,11 @@ final class Utils {
                     continue;
                 }
 
-                Map<ArchivePath, Node> classes = nestedArchive.getArchive().getContent(Filters.include(".*\\.class"));
-                for (Map.Entry<ArchivePath, Node> classEntry : classes.entrySet()) {
-                    Class<?> loadedClass = classLoader.loadClass(
-                            findClassName(classEntry.getKey()));
-
-                    beanClasses.add(loadedClass);
-                }
+                beanClasses.addAll(filterClasses(nestedArchive.getArchive(), classLoader, beansXml, resourceLoader));
             }
             Map<ArchivePath, Node> markerFiles = archive.getContent(Filters.include(".*/beans.xml"));
             if (!markerFiles.isEmpty()) {
-                Map<ArchivePath, Node> classes = archive.getContent(Filters.include(".*\\.class"));
-                for (Map.Entry<ArchivePath, Node> classEntry : classes.entrySet()) {
-                    Class<?> loadedClass = classLoader.loadClass(
-                            findClassName(classEntry.getKey()));
-
-                    beanClasses.add(loadedClass);
-                }
+                beanClasses.addAll(filterClasses(archive, classLoader, beansXml, resourceLoader));
             }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Could not load class from archive " + archive.getName(), e);
@@ -177,6 +169,30 @@ final class Utils {
         className = className.replaceAll("\\.class", "");
         className = className.replaceAll("/", ".");
         return className;
+    }
+
+    private static Collection<Class<?>> filterClasses(Archive<?> archive, ClassLoader classLoader, BeansXml beansXml, ResourceLoader resourceLoader)
+            throws ClassNotFoundException {
+        List<Class<?>> beanClasses = new ArrayList<Class<?>>();
+        Map<ArchivePath, Node> classes = archive.getContent(Filters.include(".*\\.class"));
+        for (Map.Entry<ArchivePath, Node> classEntry : classes.entrySet()) {
+            if (beansXml.getScanning().getExcludes().isEmpty()) {
+                Class<?> loadedClass = classLoader.loadClass(
+                        findClassName(classEntry.getKey()));
+                beanClasses.add(loadedClass);
+
+            } else {
+                for (Metadata<Filter> filterMetadata : beansXml.getScanning().getExcludes()) {
+                    FilterPredicate excludePredicate = new FilterPredicate(filterMetadata, resourceLoader);
+                    if (!excludePredicate.test(findClassName(classEntry.getKey()))) {
+                        Class<?> loadedClass = classLoader.loadClass(
+                                findClassName(classEntry.getKey()));
+                        beanClasses.add(loadedClass);
+                    }
+                }
+            }
+        }
+        return beanClasses;
     }
 
 }

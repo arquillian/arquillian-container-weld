@@ -19,6 +19,8 @@ package org.jboss.arquillian.container.weld.embedded;
 import java.util.Collection;
 
 import org.jboss.arquillian.container.weld.embedded.beans.MyBean;
+import org.jboss.weld.bootstrap.spi.BeansXml;
+import org.jboss.weld.resources.DefaultResourceLoader;
 import org.junit.Assert;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -48,7 +50,7 @@ public class UtilsTestCase
 
       try
       {
-         Collection<Class<?>> classes = Utils.findBeanClasses(archive, classLoader);
+         Collection<Class<?>> classes = Utils.findBeanClasses(archive, classLoader, BeansXml.EMPTY_BEANS_XML, DefaultResourceLoader.INSTANCE);
          Assert.assertEquals(1, classes.size());
       }
       finally
@@ -68,7 +70,7 @@ public class UtilsTestCase
 
       try
       {
-         Collection<Class<?>> classes = Utils.findBeanClasses(archive, classLoader);
+         Collection<Class<?>> classes = Utils.findBeanClasses(archive, classLoader, BeansXml.EMPTY_BEANS_XML, DefaultResourceLoader.INSTANCE);
          Assert.assertTrue(classes.isEmpty());
       }
       finally

@@ -182,20 +182,13 @@ public class TestContainer {
         this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(bootstrap.parse(beansXml), classes, Environments.SE), Environments.SE);
     }
 
-    public TestContainer(String beanArchiveId, Collection<URL> beansXml, Collection<Class<?>> classes) {
+    public TestContainer(String beanArchiveId, BeansXml beansXml, Collection<Class<?>> classes) {
         this(beanArchiveId, beansXml, classes, Environments.SE, false);
     }
 
-    public TestContainer(String beanArchiveId, Collection<URL> beansXml, Collection<Class<?>> classes, Environment environment, boolean merge) {
+    public TestContainer(String beanArchiveId, BeansXml beansXml, Collection<Class<?>> classes, Environment environment, boolean merge) {
         this.bootstrap = new WeldBootstrap();
-
-        BeansXml xml;
-        try {
-            xml = BeansXmlUtil.prepareBeansXml(bootstrap, beansXml, merge);
-        } catch (Exception e) {
-            throw new RuntimeException("Could not parse beans.xml", e);
-        }
-        this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(beanArchiveId, xml, classes, environment), environment);
+        this.deployment = new FlatDeployment(new BeanDeploymentArchiveImpl(beanArchiveId, beansXml, classes, environment), environment);
     }
 
     /**
