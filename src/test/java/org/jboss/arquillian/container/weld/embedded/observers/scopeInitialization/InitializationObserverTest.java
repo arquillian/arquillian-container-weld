@@ -45,7 +45,7 @@ public class InitializationObserverTest {
     }
 
     private AppScopedBean getAppScopeBean(BeanManager bm) {
-        Bean<AppScopedBean> bean = (Bean<AppScopedBean>) bm.getBeans(AppScopedBean.class).stream().findFirst().get();
+        Bean<AppScopedBean> bean = (Bean<AppScopedBean>) bm.getBeans(AppScopedBean.class).iterator().next();
         CreationalContext<AppScopedBean> creationalContext = bm.createCreationalContext(bean);
         return (AppScopedBean) bm.getReference(bean, AppScopedBean.class, creationalContext);
     }
