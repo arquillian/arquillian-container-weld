@@ -1,3 +1,5 @@
+image::https://img.shields.io/travis/arquillian/arquillian-container-weld/master.svg[link="https://travis-ci.org/arquillian/arquillian-container-weld"]
+
 == Arquillian-container-Weld
 
 Arquillian Weld embedded container is for basic testing where you can use Weld/CDI features.
