@@ -184,7 +184,7 @@ final class Utils {
             } else {
                 for (Metadata<Filter> filterMetadata : beansXml.getScanning().getExcludes()) {
                     FilterPredicate excludePredicate = new FilterPredicate(filterMetadata, resourceLoader);
-                    if (!excludePredicate.apply(findClassName(classEntry.getKey()))) {
+                    if (!excludePredicate.test(findClassName(classEntry.getKey()))) {
                         Class<?> loadedClass = classLoader.loadClass(
                                 findClassName(classEntry.getKey()));
                         beanClasses.add(loadedClass);
