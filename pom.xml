@@ -49,6 +49,7 @@
     </properties>
     <modules>
         <module>impl</module>
+        <module>ftests</module>
     </modules>
     <dependencyManagement>
         <dependencies>
