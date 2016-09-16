@@ -33,8 +33,8 @@
         <!-- Versioning -->
         <version.arquillian_core>1.1.11.Final</version.arquillian_core>
 
-        <weld.api.version>2.4.CR1</weld.api.version>
-        <weld.core.version>2.4.0.CR1</weld.core.version>
+        <weld.api.version>2.4.Final</weld.api.version>
+        <weld.core.version>2.4.0.Final</weld.core.version>
         <!-- Versioning -->
         <cdi.api.version>1.2</cdi.api.version>
         <ejb.api.version>1.0.0.Final</ejb.api.version>
