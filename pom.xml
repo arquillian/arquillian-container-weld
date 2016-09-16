@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <!-- Parent -->
     <parent>
@@ -16,7 +15,7 @@
     <!-- Artifact Configuration -->
     <groupId>org.jboss.arquillian.container</groupId>
     <artifactId>arquillian-weld-embedded-root</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0.Beta3</version>
     <name>Arquillian Container Weld Root POM</name>
     <description>Weld Container integrations for the Arquillian Project</description>
     <packaging>pom</packaging>
@@ -24,7 +23,7 @@
         <connection>scm:git:git://git@github.com:arquillian/arquillian-container-weld.git</connection>
         <developerConnection>scm:git:git@github.com:arquillian/arquillian-container-weld.git</developerConnection>
         <url>https://github.com/arquillian/arquillian-container-weld.git</url>
-        <tag>HEAD</tag>
+        <tag>2.0.0.Beta3</tag>
     </scm>
 
     <!-- Properties -->
