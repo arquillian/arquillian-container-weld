@@ -78,6 +78,12 @@
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+            <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
+            <version>${shrinkwrap.descriptors.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
