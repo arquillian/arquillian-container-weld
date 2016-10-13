@@ -182,13 +182,17 @@ final class Utils {
                 beanClasses.add(loadedClass);
 
             } else {
+                boolean isExcluded = false;
                 for (Metadata<Filter> filterMetadata : beansXml.getScanning().getExcludes()) {
                     FilterPredicate excludePredicate = new FilterPredicate(filterMetadata, resourceLoader);
-                    if (!excludePredicate.test(findClassName(classEntry.getKey()))) {
-                        Class<?> loadedClass = classLoader.loadClass(
-                                findClassName(classEntry.getKey()));
-                        beanClasses.add(loadedClass);
+                    if (excludePredicate.test(findClassName(classEntry.getKey()))) {
+                        isExcluded = true;
+                        break;
                     }
+                }
+                if (!isExcluded) {
+                    Class<?> loadedClass = classLoader.loadClass(findClassName(classEntry.getKey()));
+                    beanClasses.add(loadedClass);
                 }
             }
         }
