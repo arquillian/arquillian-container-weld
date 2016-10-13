@@ -34,6 +34,9 @@ import org.jboss.weld.bootstrap.api.helpers.SimpleServiceRegistry;
 import org.jboss.weld.bootstrap.spi.BeanDeploymentArchive;
 import org.jboss.weld.bootstrap.spi.CDI11Deployment;
 import org.jboss.weld.bootstrap.spi.Metadata;
+import org.jboss.weld.config.ConfigurationKey;
+import org.jboss.weld.configuration.spi.ExternalConfiguration;
+import org.jboss.weld.configuration.spi.helpers.ExternalConfigurationBuilder;
 import org.jboss.weld.ejb.spi.EjbServices;
 import org.jboss.weld.security.spi.SecurityServices;
 import org.jboss.weld.transaction.spi.TransactionServices;
@@ -67,6 +70,12 @@ public class FlatDeployment implements CDI11Deployment {
             services.add(TransactionServices.class, new MockTransactionServices());
             services.add(EjbServices.class, new MockEjBServices());
             services.add(SecurityServices.class, new MockSecurityServices());
+        }
+        if (environment.equals(Environments.SE)) {
+            ExternalConfigurationBuilder configurationBuilder = new ExternalConfigurationBuilder()
+                // Use relaxed construction by default
+                .add(ConfigurationKey.RELAXED_CONSTRUCTION.get(), true);
+            services.add(ExternalConfiguration.class, configurationBuilder.build());
         }
     }
 
