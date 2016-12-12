@@ -36,10 +36,12 @@ import org.jboss.weld.bootstrap.spi.Deployment;
 import org.jboss.weld.context.RequestContext;
 import org.jboss.weld.context.bound.BoundSessionContext;
 import org.jboss.weld.context.unbound.UnboundLiteral;
-import org.jboss.weld.literal.DestroyedLiteral;
-import org.jboss.weld.literal.InitializedLiteral;
 import org.jboss.weld.manager.api.WeldManager;
+
 import static java.util.Arrays.asList;
+
+import org.jboss.arquillian.container.weld.embedded.literals.DestroyedLiteral;
+import org.jboss.arquillian.container.weld.embedded.literals.InitializedLiteral;
 
 /**
  * <p>
