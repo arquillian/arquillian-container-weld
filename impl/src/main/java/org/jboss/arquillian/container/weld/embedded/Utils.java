@@ -47,6 +47,8 @@ import org.jboss.weld.resources.spi.ResourceLoader;
  * @version $Revision: $
  */
 final class Utils {
+
+    private static final String BEANS_XML_REGEX = ".*/beans\\.xml";
     private Utils() {
     }
 
@@ -72,7 +74,7 @@ final class Utils {
                 continue;
             }
             ArchiveAsset nestedArchive = (ArchiveAsset) nestedArchiveEntry.getValue().getAsset();
-            Map<ArchivePath, Node> classes = nestedArchive.getArchive().getContent(Filters.include(".*/beans.xml"));
+            Map<ArchivePath, Node> classes = nestedArchive.getArchive().getContent(Filters.include(BEANS_XML_REGEX));
             for (final Map.Entry<ArchivePath, Node> entry : classes.entrySet()) {
                 try {
                     beansXmls.add(
@@ -99,7 +101,7 @@ final class Utils {
                 }
             }
         }
-        Map<ArchivePath, Node> classes = archive.getContent(Filters.include(".*/beans.xml"));
+        Map<ArchivePath, Node> classes = archive.getContent(Filters.include(BEANS_XML_REGEX));
         for (final Map.Entry<ArchivePath, Node> entry : classes.entrySet()) {
             try {
                 beansXmls.add(
@@ -139,14 +141,14 @@ final class Utils {
                     continue;
                 }
                 ArchiveAsset nestedArchive = (ArchiveAsset) nestedArchiveEntry.getValue().getAsset();
-                Map<ArchivePath, Node> markerFiles = nestedArchive.getArchive().getContent(Filters.include(".*/beans.xml"));
+                Map<ArchivePath, Node> markerFiles = nestedArchive.getArchive().getContent(Filters.include(BEANS_XML_REGEX));
                 if (markerFiles.isEmpty()) {
                     continue;
                 }
 
                 beanClasses.addAll(filterClasses(nestedArchive.getArchive(), classLoader, beansXml, resourceLoader));
             }
-            Map<ArchivePath, Node> markerFiles = archive.getContent(Filters.include(".*/beans.xml"));
+            Map<ArchivePath, Node> markerFiles = archive.getContent(Filters.include(BEANS_XML_REGEX));
             if (!markerFiles.isEmpty()) {
                 beanClasses.addAll(filterClasses(archive, classLoader, beansXml, resourceLoader));
             }
