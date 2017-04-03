@@ -53,11 +53,10 @@ public final class BeansXmlUtil
    @SuppressWarnings("unchecked")
    public static BeansXml removeDuplicate(BeansXml xml) throws Exception
    {
-      Class<?> clazz = xml.getClass();
-      removeDuplicate((List<Metadata<String>>)clazz.getMethod("getEnabledAlternativeStereotypes").invoke(xml));
-      removeDuplicate((List<Metadata<String>>)clazz.getMethod("getEnabledAlternativeClasses").invoke(xml));
-      removeDuplicate((List<Metadata<String>>)clazz.getMethod("getEnabledDecorators").invoke(xml));
-      removeDuplicate((List<Metadata<String>>)clazz.getMethod("getEnabledInterceptors").invoke(xml));
+      removeDuplicate((xml.getEnabledAlternativeStereotypes()));
+      removeDuplicate((xml.getEnabledAlternativeClasses()));
+      removeDuplicate(xml.getEnabledDecorators());
+      removeDuplicate(xml.getEnabledInterceptors());
       return xml;
    }
 
@@ -70,8 +69,7 @@ public final class BeansXmlUtil
          {
             if (item.getValue().equals(list.get(n).getValue()))
             {
-               list.remove(i);
-               i--;
+               list.remove(n);
             }
          }
       }
