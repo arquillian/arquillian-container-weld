@@ -1,5 +1,9 @@
 language: java
 jdk:
-  - oraclejdk7
-script: "mvn clean install"
-sudo: false
+  - openjdk7
+cache:
+  directories:
+    - $HOME/.m2
+install: true
+script: 
+  - mvn clean install
