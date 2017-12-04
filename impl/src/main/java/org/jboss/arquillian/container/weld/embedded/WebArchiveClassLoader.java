@@ -55,7 +55,7 @@ public class WebArchiveClassLoader extends ShrinkWrapClassLoader {
     /**
      * Web specification resource root
      */
-    private static final String WAR_ROOT_LOCATION = "WEB-INF/classes/";
+    private static final String WAR_ROOT_LOCATION = "/WEB-INF/classes";
     static {
         try {
             CONTEXT = new URL(ARCHIVE,"",0,"",new ArchiveURLStreamHandler(null));
@@ -72,21 +72,21 @@ public class WebArchiveClassLoader extends ShrinkWrapClassLoader {
 
     @Override
     public URL findResource(String name) {
-        final String adjustedName = WAR_ROOT_LOCATION + name;
+        final String adjustedName = adjust(name);
         return super.findResource(adjustedName);
     }
 
     @Override
     public Enumeration<URL> findResources(String name) throws IOException {
-        // first read from WEB-INF/classes
-        final String adjustedName = WAR_ROOT_LOCATION + name;
+        // first read from /WEB-INF/classes
+        final String adjustedName = adjust(name);
         final Enumeration<URL> urls = super.findResources(adjustedName);
         final List<URL> collectedUrls = new ArrayList<>();
         while(urls.hasMoreElements()) {
             collectedUrls.add(urls.nextElement());
         }
         WebArchive war = archive.as(WebArchive.class);
-        // we need to also check WEB-INF/lib
+        // we need to also check /WEB-INF/lib
         Map<ArchivePath, Node> libs = war.getContent(include("/WEB-INF/lib/.*"));
         for(Map.Entry<ArchivePath, Node> entry : libs.entrySet()) {
             Asset asset = entry.getValue().getAsset();
@@ -104,6 +104,14 @@ public class WebArchiveClassLoader extends ShrinkWrapClassLoader {
     public void close() throws IOException {
         super.close();
 
+    }
+
+    private String adjust(String name) {
+        if(name.startsWith("/")) {
+            return WAR_ROOT_LOCATION + name;
+        } else {
+            return WAR_ROOT_LOCATION + "/" + name;
+        }
     }
 
     private static class ArchiveURLStreamHandler extends URLStreamHandler {
