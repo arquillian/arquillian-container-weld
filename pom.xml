@@ -33,7 +33,7 @@
         <version.arquillian_core>1.1.15.Final</version.arquillian_core>
 
         <weld.api.version>2.4.SP1</weld.api.version>
-        <weld.core.version>2.4.4.Final</weld.core.version>
+        <weld.core.version>2.4.5.Final</weld.core.version>
         <!-- Versioning -->
         <cdi.api.version>1.2</cdi.api.version>
         <ejb.api.version>1.0.0.Final</ejb.api.version>
@@ -45,7 +45,6 @@
         <!-- override from parent -->
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
-
     </properties>
     <modules>
         <module>impl</module>
