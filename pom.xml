@@ -123,6 +123,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                 </configuration>
             </plugin>
