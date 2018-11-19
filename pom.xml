@@ -32,7 +32,7 @@
         <!-- Versioning -->
         <version.arquillian_core>1.1.15.Final</version.arquillian_core>
 
-        <weld.api.version>2.4.SP1</weld.api.version>
+        <weld.api.version>3.0.Final</weld.api.version>
         <weld.core.version>2.4.5.Final</weld.core.version>
         <!-- Versioning -->
         <cdi.api.version>1.2</cdi.api.version>
