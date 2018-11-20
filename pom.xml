@@ -35,7 +35,7 @@
         <weld.api.version>2.4.SP1</weld.api.version>
         <weld.core.version>2.4.5.Final</weld.core.version>
         <!-- Versioning -->
-        <cdi.api.version>1.2</cdi.api.version>
+        <cdi.api.version>2.0</cdi.api.version>
         <ejb.api.version>1.0.0.Final</ejb.api.version>
         <javax.el.version>3.0-b08</javax.el.version>
         <jpa.api.version>1.0.2</jpa.api.version>
