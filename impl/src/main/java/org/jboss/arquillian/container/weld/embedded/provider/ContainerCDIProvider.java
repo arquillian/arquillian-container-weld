@@ -41,12 +41,20 @@ public class ContainerCDIProvider implements CDIProvider {
             // sort the managers by their ID and use the first one as the fallback BeanManager
             // this guarantees that we consistently use the same BM
             List<BeanManagerImpl> managers = new ArrayList<BeanManagerImpl>(getContainer().beanDeploymentArchives().values());
-            Collections.sort(managers, BeanManagers.ID_COMPARATOR);
-            this.fallbackBeanManager = managers.get(0);
+
+            if (!managers.isEmpty()) {
+                Collections.sort(managers, BeanManagers.ID_COMPARATOR);
+                this.fallbackBeanManager = managers.get(0);
+            } else {
+                this.fallbackBeanManager = null;
+            }
         }
 
         @Override
         protected BeanManagerImpl unsatisfiedBeanManager(String callerClassName) {
+            if (fallbackBeanManager == null) {
+                throw new IllegalStateException("Unable to find BeanManager for " + callerClassName);
+            }
             return fallbackBeanManager;
         }
     }
