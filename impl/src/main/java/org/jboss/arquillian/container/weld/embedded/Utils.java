@@ -164,7 +164,8 @@ final class Utils {
      */
     public static String findClassName(ArchivePath path) {
         String className = path.get();
-        className = className.replaceAll("/WEB-INF/classes/", "");
+        className = className.replaceAll("/WEB-INF/classes/", "")
+                .replaceAll("/META-INF/versions/\\d*/", "");
         if (className.charAt(0) == '/') {
             className = className.substring(1);
         }
