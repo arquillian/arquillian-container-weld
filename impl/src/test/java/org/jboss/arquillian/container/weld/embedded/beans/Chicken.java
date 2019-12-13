@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.container.weld.embedded.beans;
 
-import javax.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.SessionScoped;
 
 /**
  * Chicken

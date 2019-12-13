@@ -22,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.enterprise.context.spi.Context;
-import javax.enterprise.inject.Instance;
+import jakarta.enterprise.context.spi.Context;
+import jakarta.enterprise.inject.Instance;
 
 import org.jboss.weld.Container;
 import org.jboss.weld.bootstrap.WeldBootstrap;

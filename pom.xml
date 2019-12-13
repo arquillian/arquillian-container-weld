@@ -15,7 +15,7 @@
     <!-- Artifact Configuration -->
     <groupId>org.jboss.arquillian.container</groupId>
     <artifactId>arquillian-weld-embedded-root</artifactId>
-    <version>2.1.0.Final-SNAPSHOT</version>
+    <version>3.0.0.Final-SNAPSHOT</version>
     <name>Arquillian Container Weld Root POM</name>
     <description>Weld Container integrations for the Arquillian Project</description>
     <packaging>pom</packaging>
@@ -32,19 +32,19 @@
         <!-- Versioning -->
         <version.arquillian_core>1.4.1.Final</version.arquillian_core>
 
-        <weld.api.version>2.4.SP1</weld.api.version>
-        <weld.core.version>2.4.5.Final</weld.core.version>
+        <weld.api.version>4.0.0-SNAPSHOT</weld.api.version>
+        <weld.core.version>4.0.0-SNAPSHOT</weld.core.version>
         <!-- Versioning -->
-        <cdi.api.version>1.2</cdi.api.version>
+        <cdi.api.version>3.0.0-SNAPSHOT</cdi.api.version>
         <ejb.api.version>1.0.0.Final</ejb.api.version>
-        <javax.el.version>3.0-b08</javax.el.version>
+        <javax.el.version>4.0.0-SNAPSHOT</javax.el.version>
         <jpa.api.version>1.0.2</jpa.api.version>
         <jta.api.version>1.1</jta.api.version>
         <shrinkwrap.descriptors.version>2.0.0</shrinkwrap.descriptors.version>
 
         <!-- override from parent -->
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
     <modules>
         <module>impl</module>
@@ -80,19 +80,19 @@
             </dependency>
             <dependency>
                 <groupId>org.jboss.weld</groupId>
-                <artifactId>weld-core</artifactId>
+                <artifactId>weld-core-impl</artifactId>
                 <version>${weld.core.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>javax.enterprise</groupId>
-                <artifactId>cdi-api</artifactId>
+                <groupId>jakarta.enterprise</groupId>
+                <artifactId>jakarta.enterprise.cdi-api</artifactId>
                 <version>${cdi.api.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>javax.el-api</artifactId>
+                <groupId>jakarta.el</groupId>
+                <artifactId>jakarta.el-api</artifactId>
                 <version>${javax.el.version}</version>
                 <scope>provided</scope>
             </dependency>

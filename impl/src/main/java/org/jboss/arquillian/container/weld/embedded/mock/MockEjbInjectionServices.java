@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.container.weld.embedded.mock;
 
-import javax.enterprise.inject.spi.InjectionPoint;
+import jakarta.enterprise.inject.spi.InjectionPoint;
 
 import org.jboss.weld.injection.spi.EjbInjectionServices;
 import org.jboss.weld.injection.spi.ResourceReferenceFactory;

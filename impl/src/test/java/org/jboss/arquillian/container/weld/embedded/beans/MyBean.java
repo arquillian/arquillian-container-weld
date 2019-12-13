@@ -18,7 +18,7 @@ package org.jboss.arquillian.container.weld.embedded.beans;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * MyBean

@@ -17,7 +17,7 @@
  */
 package org.jboss.arquillian.container.weld.embedded.beans;
 
-import javax.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Produces;
 
 /**
  * LoopingProducer

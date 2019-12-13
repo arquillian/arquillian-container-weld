@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.container.weld.embedded;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.weld.embedded.beans.MyBean;
