@@ -30,16 +30,16 @@
     <properties>
 
         <!-- Versioning -->
-        <version.arquillian_core>1.4.1.Final</version.arquillian_core>
+        <version.arquillian_core>1.7.0.Final-SNAPSHOT</version.arquillian_core>
 
         <weld.api.version>4.0.0-SNAPSHOT</weld.api.version>
         <weld.core.version>4.0.0-SNAPSHOT</weld.core.version>
         <!-- Versioning -->
         <cdi.api.version>3.0.0-SNAPSHOT</cdi.api.version>
-        <ejb.api.version>1.0.0.Final</ejb.api.version>
+        <ejb.api.version>4.0.0-RC1</ejb.api.version>
         <javax.el.version>4.0.0-SNAPSHOT</javax.el.version>
-        <jpa.api.version>1.0.2</jpa.api.version>
-        <jta.api.version>1.1</jta.api.version>
+        <jpa.api.version>3.0.0-RC2</jpa.api.version>
+        <jta.api.version>2.0.0-RC1</jta.api.version>
         <shrinkwrap.descriptors.version>2.0.0</shrinkwrap.descriptors.version>
 
         <!-- override from parent -->
@@ -97,20 +97,20 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.jboss.spec.javax.ejb</groupId>
-                <artifactId>jboss-ejb-api_3.2_spec</artifactId>
+                <groupId>jakarta.ejb</groupId>
+                <artifactId>jakarta.ejb-api</artifactId>
                 <version>${ejb.api.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>javax.transaction</groupId>
-                <artifactId>jta</artifactId>
+                <groupId>jakarta.transaction</groupId>
+                <artifactId>jakarta.transaction-api</artifactId>
                 <version>${jta.api.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>persistence-api</artifactId>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
                 <version>${jpa.api.version}</version>
                 <scope>provided</scope>
             </dependency>
