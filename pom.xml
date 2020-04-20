@@ -35,9 +35,9 @@
         <weld.api.version>4.0.0-SNAPSHOT</weld.api.version>
         <weld.core.version>4.0.0-SNAPSHOT</weld.core.version>
         <!-- Versioning -->
-        <cdi.api.version>3.0.0-SNAPSHOT</cdi.api.version>
+        <cdi.api.version>3.0.0-M2</cdi.api.version>
         <ejb.api.version>4.0.0-RC1</ejb.api.version>
-        <javax.el.version>4.0.0-SNAPSHOT</javax.el.version>
+        <javax.el.version>4.0.0-RC1</javax.el.version>
         <jpa.api.version>3.0.0-RC2</jpa.api.version>
         <jta.api.version>2.0.0-RC1</jta.api.version>
         <shrinkwrap.descriptors.version>2.0.0</shrinkwrap.descriptors.version>
