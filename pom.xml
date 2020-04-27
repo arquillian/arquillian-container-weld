@@ -33,7 +33,7 @@
         <version.arquillian_core>1.7.0.Alpha1</version.arquillian_core>
 
         <weld.api.version>4.0.Alpha1</weld.api.version>
-        <weld.core.version>4.0.0-SNAPSHOT</weld.core.version>
+        <weld.core.version>4.0.0.Alpha1</weld.core.version>
         <!-- Versioning -->
         <cdi.api.version>3.0.0-M2</cdi.api.version>
         <ejb.api.version>4.0.0-RC1</ejb.api.version>
