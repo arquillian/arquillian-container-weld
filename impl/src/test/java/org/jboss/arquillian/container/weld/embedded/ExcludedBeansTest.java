@@ -2,8 +2,8 @@ package org.jboss.arquillian.container.weld.embedded;
 
 import static org.junit.Assert.assertTrue;
 
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.weld.embedded.beans.Chicken;

@@ -16,8 +16,8 @@
  */
 package org.jboss.arquillian.container.weld.embedded;
 
-import javax.enterprise.context.Conversation;
-import javax.inject.Inject;
+import jakarta.enterprise.context.Conversation;
+import jakarta.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.weld.embedded.beans.TalkingChicken;

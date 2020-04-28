@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.enterprise.inject.spi.Extension;
+import jakarta.enterprise.inject.spi.Extension;
 
 @RunWith(Arquillian.class)
 public class WebArchiveWithLibJarExtensionTestCase {

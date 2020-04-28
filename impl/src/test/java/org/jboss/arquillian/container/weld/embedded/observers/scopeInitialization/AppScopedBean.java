@@ -16,7 +16,7 @@
  */
 package org.jboss.arquillian.container.weld.embedded.observers.scopeInitialization;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class AppScopedBean {

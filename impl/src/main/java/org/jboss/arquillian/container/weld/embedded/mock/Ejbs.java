@@ -23,11 +23,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.ejb.EnterpriseBean;
-import javax.ejb.MessageDriven;
-import javax.ejb.Singleton;
-import javax.ejb.Stateful;
-import javax.ejb.Stateless;
+import jakarta.ejb.EnterpriseBean;
+import jakarta.ejb.MessageDriven;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Stateful;
+import jakarta.ejb.Stateless;
 
 import org.jboss.weld.ejb.spi.EjbDescriptor;
 
@@ -38,7 +38,7 @@ public class Ejbs {
 
     public static Collection<EjbDescriptor<?>> createEjbDescriptors(Iterable<Class<?>> classes) {
         // EJB API dependency is optional
-        if (!Utils.isClassAccessible("javax.ejb.Singleton", Ejbs.class.getClassLoader())) {
+        if (!Utils.isClassAccessible("jakarta.ejb.Singleton", Ejbs.class.getClassLoader())) {
             return Collections.emptySet();
         }
         List<EjbDescriptor<?>> ejbs = new ArrayList<EjbDescriptor<?>>();

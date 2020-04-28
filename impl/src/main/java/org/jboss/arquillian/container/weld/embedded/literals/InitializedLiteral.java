@@ -18,9 +18,9 @@ package org.jboss.arquillian.container.weld.embedded.literals;
 
 import java.lang.annotation.Annotation;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
  *

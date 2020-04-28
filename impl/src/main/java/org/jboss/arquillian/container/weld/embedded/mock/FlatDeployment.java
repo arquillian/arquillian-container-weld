@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.Set;
 
-import javax.enterprise.inject.spi.Extension;
+import jakarta.enterprise.inject.spi.Extension;
 
 import org.jboss.weld.bootstrap.api.Environment;
 import org.jboss.weld.bootstrap.api.Environments;

@@ -22,13 +22,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.MessageDriven;
-import javax.ejb.Remote;
-import javax.ejb.Remove;
-import javax.ejb.Singleton;
-import javax.ejb.Stateful;
-import javax.ejb.Stateless;
+import jakarta.ejb.Local;
+import jakarta.ejb.MessageDriven;
+import jakarta.ejb.Remote;
+import jakarta.ejb.Remove;
+import jakarta.ejb.Singleton;
+import jakarta.ejb.Stateful;
+import jakarta.ejb.Stateless;
 
 import org.jboss.weld.ejb.spi.BusinessInterfaceDescriptor;
 import org.jboss.weld.ejb.spi.EjbDescriptor;
