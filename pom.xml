@@ -30,7 +30,7 @@
     <properties>
 
         <!-- Versioning -->
-        <version.arquillian_core>1.7.0.Alpha2</version.arquillian_core>
+        <version.arquillian_core>1.7.0.Alpha9</version.arquillian_core>
 
         <weld.api.version>4.0.Alpha1</weld.api.version>
         <weld.core.version>4.0.0.Alpha3</weld.core.version>
