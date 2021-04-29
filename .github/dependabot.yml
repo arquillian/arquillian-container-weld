@@ -1,0 +1,25 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.jboss.arquillian:arquillian-build
+    versions:
+    - 1.7.0.Alpha6
+    - 1.7.0.Alpha7
+    - 1.7.0.Alpha8
+  - dependency-name: org.jboss.arquillian:arquillian-bom
+    versions:
+    - 1.7.0.Alpha6
+    - 1.7.0.Alpha7
+    - 1.7.0.Alpha8
+  - dependency-name: org.jboss.weld:weld-core-impl
+    versions:
+    - 4.0.0.Final
+  - dependency-name: org.jboss:jboss-parent
+    versions:
+    - "37"
