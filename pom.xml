@@ -34,7 +34,7 @@
 
         <!-- TODO Circular dependency on Weld - will need to be updated after release along with CDI API version -->
         <weld.api.version>4.0.SP1</weld.api.version>
-        <weld.core.version>4.0.1.SP1</weld.core.version>
+        <weld.core.version>4.0.1.Final</weld.core.version>
       
         <!-- Versioning -->
         <cdi.api.version>3.0.0-M2</cdi.api.version>
