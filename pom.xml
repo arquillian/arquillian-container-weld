@@ -33,7 +33,7 @@
         <version.arquillian_core>1.7.0.Alpha10</version.arquillian_core>
 
         <!-- TODO Circular dependency on Weld - will need to be updated after release along with CDI API version -->
-        <weld.api.version>4.0.SP1</weld.api.version>
+        <weld.api.version>4.0.1.Final</weld.api.version>
         <weld.core.version>4.0.1.Final</weld.core.version>
       
         <!-- Versioning -->
