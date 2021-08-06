@@ -243,7 +243,7 @@ public class TestContainer {
                 .endInitialization();
         if (environment.equals(Environments.SE)) {
             for (BeanDeploymentArchive beanDeploymentArchive : deployment.getBeanDeploymentArchives()) {
-                bootstrap.getManager(beanDeploymentArchive).fireEvent(new Object(), InitializedLiteral.APPLICATION);
+                bootstrap.getManager(beanDeploymentArchive).getEvent().select(InitializedLiteral.APPLICATION).fire(new Object());
             }
         }
         return this;
@@ -278,7 +278,7 @@ public class TestContainer {
 
         if (environment.equals(Environments.SE)) {
             for (BeanDeploymentArchive beanDeploymentArchive : deployment.getBeanDeploymentArchives()) {
-                bootstrap.getManager(beanDeploymentArchive).fireEvent(new Object(), DestroyedLiteral.APPLICATION);
+                bootstrap.getManager(beanDeploymentArchive).getEvent().select(DestroyedLiteral.APPLICATION).fire(new Object());
             }
         }
         bootstrap.shutdown();
