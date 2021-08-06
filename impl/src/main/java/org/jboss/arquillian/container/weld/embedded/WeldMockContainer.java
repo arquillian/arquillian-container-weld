@@ -106,7 +106,7 @@ public class WeldMockContainer implements DeployableContainer<WeldMockConfigurat
         BeansXml beansXml = BeansXmlUtil.prepareBeansXml(beansXmlParser, findBeansXml(archive), true);
         Environment environment = Environments.valueOf(configuration.get().getEnvironment());
         TestContainer container = new TestContainer(findArchiveId(archive), beansXml,
-                findBeanClasses(archive, classLoader, beansXml, serviceRegistry.get(ResourceLoader.class)), environment, true);
+                findBeanClasses(archive, classLoader, beansXml, serviceRegistry.get(ResourceLoader.class), environment), environment, true);
         Bootstrap bootstrap = container.getBootstrap();
 
         contextClassLoaderManagerProducer.set(classLoaderManager);
