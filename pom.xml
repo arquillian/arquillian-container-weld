@@ -16,7 +16,7 @@
     <groupId>org.jboss.arquillian.container</groupId>
     <artifactId>arquillian-weld-embedded-root</artifactId>
     <version>3.0.0.Final-SNAPSHOT</version>
-    <name>Arquillian Container Weld</name>
+    <name>Arquillian Container Weld Parent</name>
     <description>Weld Container integrations for the Arquillian Project</description>
     <packaging>pom</packaging>
     <scm>
