@@ -55,7 +55,6 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -69,6 +68,8 @@ import java.util.Set;
 final class Utils {
 
     private static final String BEANS_XML_REGEX = ".*/beans\\.xml";
+
+    // prepared sets of annotations so that we avoid re-creating them multiple times later
     private static final List<Class<? extends Annotation>> META_ANNOTATIONS = ImmutableList.of(Stereotype.class, NormalScope.class);
     private static final Set<Class<? extends Annotation>> BEAN_DEFINING_ANNOTATIONS = ImmutableSet.of(
             // built-in scopes
@@ -78,7 +79,14 @@ final class Utils {
             Model.class,
             // meta-annotations
             NormalScope.class, Stereotype.class);
-    private static final Set<Class<? extends Annotation>> ADDITIONAL_EE_BEAN_DEFINING_ANNOTATIONS = ImmutableSet.of(
+    private static final Set<Class<? extends Annotation>> BEAN_DEFINING_ANNOTATIONS_WITH_EE_ANNOTATIONS = ImmutableSet.of(
+            // built-in scopes
+            Dependent.class, RequestScoped.class, ConversationScoped.class, SessionScoped.class, ApplicationScoped.class,
+            Interceptor.class, Decorator.class,
+            // built-in stereotype
+            Model.class,
+            // meta-annotations
+            NormalScope.class, Stereotype.class,
             // EJB annotations are to be considered bean defining in annotated discovery mode
             jakarta.ejb.Singleton.class, Stateful.class, Stateless.class);
 
@@ -238,9 +246,7 @@ final class Utils {
             Set<Class<? extends Annotation>> completeSetOfBeanDefiningAnnotations;
             // if we are in EE, we need to consider EJB annotation to be bean defining
             if (environment != null && (environment.equals(Environments.EE_INJECT) || environment.equals(Environments.EE))) {
-                completeSetOfBeanDefiningAnnotations = new HashSet<>();
-                completeSetOfBeanDefiningAnnotations.addAll(BEAN_DEFINING_ANNOTATIONS);
-                completeSetOfBeanDefiningAnnotations.addAll(ADDITIONAL_EE_BEAN_DEFINING_ANNOTATIONS);
+                completeSetOfBeanDefiningAnnotations = BEAN_DEFINING_ANNOTATIONS_WITH_EE_ANNOTATIONS;
             } else {
                 completeSetOfBeanDefiningAnnotations = BEAN_DEFINING_ANNOTATIONS;
             }
@@ -255,7 +261,7 @@ final class Utils {
     }
 
     /**
-     * Checks given class for presence of any bean-defining annotation; returns true if the class has any of them.
+     * Checks given class for direct presence of any bean-defining annotation; returns true if the class has any of them.
      * The set of bean defining annotations is provided as a parameter.
      * <p>
      * This method is copied from Weld's org.jboss.weld.environment.util.Reflections#hasBeanDefiningAnnotation.
@@ -266,7 +272,7 @@ final class Utils {
      */
     private static boolean hasBeanDefiningAnnotation(Class<?> clazz, Set<Class<? extends Annotation>> initialBeanDefiningAnnotations) {
         for (Class<? extends Annotation> beanDefiningAnnotation : initialBeanDefiningAnnotations) {
-            if (clazz.isAnnotationPresent(beanDefiningAnnotation)) {
+            if (clazz.getDeclaredAnnotation(beanDefiningAnnotation) != null) {
                 return true;
             }
         }
@@ -279,7 +285,7 @@ final class Utils {
     }
 
     /**
-     * Checks provided array of annotations for presence of given meta-annotation.
+     * Checks provided array of annotations for presence of directly declared given meta-annotation.
      * Returns true if any
      *
      * @param annotations        Annotations to check for presence of meta annotation
@@ -288,7 +294,7 @@ final class Utils {
      */
     private static boolean hasBeanDefiningMetaAnnotationSpecified(Annotation[] annotations, Class<? extends Annotation> metaAnnotationType) {
         for (Annotation annotation : annotations) {
-            if (annotation.annotationType().isAnnotationPresent(metaAnnotationType)) {
+            if (annotation.annotationType().getDeclaredAnnotation(metaAnnotationType) != null) {
                 return true;
             }
         }
