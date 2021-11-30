@@ -17,6 +17,7 @@
  */
 package org.jboss.arquillian.container.weld.embedded.beans;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 
 /**
@@ -25,6 +26,7 @@ import jakarta.enterprise.inject.Produces;
  * @author <a href="mailto:aslak@redhat.com">Aslak Knutsen</a>
  * @version $Revision: $
  */
+@Dependent
 public class LoopingProducer
 {
    @Produces 
