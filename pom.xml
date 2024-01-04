@@ -30,18 +30,18 @@
     <properties>
 
         <!-- Versioning -->
-        <version.arquillian_core>1.7.0.Alpha10</version.arquillian_core>
+        <version.arquillian_core>1.8.0.Final</version.arquillian_core>
 
         <!-- TODO Circular dependency on Weld - will need to be updated after release along with CDI API version -->
-        <weld.api.version>5.0.Beta2</weld.api.version>
-        <weld.core.version>5.0.0.Alpha1</weld.core.version>
+        <weld.api.version>6.0.Alpha2</weld.api.version>
+        <weld.core.version>6.0.0.Alpha1</weld.core.version>
       
         <!-- Versioning -->
-        <cdi.api.version>4.0.0.Beta2</cdi.api.version>
-        <ejb.api.version>4.0.0</ejb.api.version>
-        <jta.api.version>2.0.0</jta.api.version>
-        <jpa.api.version>3.0.0</jpa.api.version>
-        <javax.el.version>4.0.0</javax.el.version>
+        <cdi.api.version>4.1.0-M1</cdi.api.version>
+        <ejb.api.version>4.0.1</ejb.api.version>
+        <jta.api.version>2.0.1</jta.api.version>
+        <jpa.api.version>3.2.0-M1</jpa.api.version>
+        <javax.el.version>6.0.0-M1</javax.el.version>
         <shrinkwrap.descriptors.version>2.0.0</shrinkwrap.descriptors.version>
 
         <!-- override from parent -->
@@ -98,6 +98,11 @@
                 <artifactId>jakarta.enterprise.cdi-api</artifactId>
                 <version>${cdi.api.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.enterprise</groupId>
+                <artifactId>jakarta.enterprise.cdi-el-api</artifactId>
+                <version>${cdi.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.el</groupId>
