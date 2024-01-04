@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.jboss.arquillian.container</groupId>
         <artifactId>arquillian-weld-embedded-root</artifactId>
-        <version>3.0.3.Final-SNAPSHOT</version>
+        <version>4.0.0.Final</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
