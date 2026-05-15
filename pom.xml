@@ -40,7 +40,7 @@
         <cdi.api.version>4.1.0-M1</cdi.api.version>
         <ejb.api.version>4.0.1</ejb.api.version>
         <jta.api.version>2.0.1</jta.api.version>
-        <jpa.api.version>3.2.0-M1</jpa.api.version>
+        <jpa.api.version>4.0.0-M3</jpa.api.version>
         <javax.el.version>6.1.0-M2</javax.el.version>
         <shrinkwrap.descriptors.version>2.0.0</shrinkwrap.descriptors.version>
 
