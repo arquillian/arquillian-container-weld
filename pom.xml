@@ -30,18 +30,18 @@
     <properties>
 
         <!-- Versioning -->
-        <version.arquillian_core>1.8.0.Final</version.arquillian_core>
+        <version.arquillian.core>1.10.1.Final</version.arquillian.core>
+        <version.arquillian.jakarta>10.0.0.Final</version.arquillian.jakarta>
 
-        <!-- TODO Circular dependency on Weld - will need to be updated after release along with CDI API version -->
-        <weld.api.version>7.0.Alpha7</weld.api.version>
-        <weld.core.version>6.0.0.Alpha1</weld.core.version>
+        <weld.api.version>6.0.Final</weld.api.version>
+        <weld.core.version>6.0.4.Final</weld.core.version>
 
         <!-- Versioning -->
-        <cdi.api.version>4.1.0-M1</cdi.api.version>
+        <cdi.api.version>4.1.0</cdi.api.version>
         <ejb.api.version>4.0.1</ejb.api.version>
         <jta.api.version>2.0.1</jta.api.version>
-        <jpa.api.version>4.0.0-M3</jpa.api.version>
-        <javax.el.version>6.1.0-M2</javax.el.version>
+        <jpa.api.version>3.2.0</jpa.api.version>
+        <javax.el.version>6.0.1</javax.el.version>
         <shrinkwrap.descriptors.version>2.0.0</shrinkwrap.descriptors.version>
 
         <!-- override from parent -->
@@ -56,14 +56,21 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>${version.arquillian_core}</version>
+                <version>${version.arquillian.core}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-build</artifactId>
-                <version>${version.arquillian_core}</version>
+                <version>${version.arquillian.core}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.arquillian.jakarta</groupId>
+                <artifactId>arquillian-jakarta-bom</artifactId>
+                <version>${version.arquillian.jakarta}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -7,6 +7,18 @@ Mock EE services (like EjbServices and JpaInjectionServices) are not enabled by 
 (see https://github.com/weld/api/blob/master/weld-spi/src/main/java/org/jboss/weld/bootstrap/api/Environments.java)
 either programmatically by passing environment parameter to `TestContainer` (or `FlatDeployment` or `BeanDeploymentArchiveImpl`) or you can use configuration property.
 
+=== Version compatibility
+
+[cols="4*", options="header"]
+|===
+| *Container Version* | *Jakarta EE* | *CDI* | *Weld*
+| 5.x _(planned)_ | Jakarta EE 12 | CDI 5.0 | Weld 7.0
+| 4.x | Jakarta EE 11 | CDI 4.1 | Weld 6.0
+| 3.x | Jakarta EE 9/10 | CDI 3.0/4.0 | Weld 4/5
+| 2.x | Java EE 7 | CDI 1.2 | Weld 2.x
+| 1.x | Java EE 6/7 | CDI 1.0/1.1 | Weld 1.x/2.x
+|===
+
 === Configuration properties
 
 [cols="3*", options="header"]
