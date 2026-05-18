@@ -30,8 +30,8 @@
     <properties>
 
         <!-- Versioning -->
-        <version.arquillian_core>1.10.1.Final</version.arquillian_core>
-        <version.arquillian_jakarta>10.0.0.Final</version.arquillian_jakarta>
+        <version.arquillian.core>1.10.1.Final</version.arquillian.core>
+        <version.arquillian.jakarta>10.0.0.Final</version.arquillian.jakarta>
 
         <weld.api.version>6.0.Final</weld.api.version>
         <weld.core.version>6.0.4.Final</weld.core.version>
@@ -56,21 +56,21 @@
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-bom</artifactId>
-                <version>${version.arquillian_core}</version>
+                <version>${version.arquillian.core}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
                 <artifactId>arquillian-build</artifactId>
-                <version>${version.arquillian_core}</version>
+                <version>${version.arquillian.core}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.jboss.arquillian.jakarta</groupId>
                 <artifactId>arquillian-jakarta-bom</artifactId>
-                <version>${version.arquillian_jakarta}</version>
+                <version>${version.arquillian.jakarta}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
