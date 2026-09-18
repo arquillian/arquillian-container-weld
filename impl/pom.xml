@@ -12,6 +12,7 @@
     <!-- Artifact Configuration -->
     <artifactId>arquillian-weld-embedded</artifactId>
     <name>Arquillian Container Weld</name>
+    <description>Arquillian Container implementation for Embedded Weld</description>
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Dependencies -->

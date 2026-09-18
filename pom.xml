@@ -19,12 +19,38 @@
     <name>Arquillian Container Weld Parent</name>
     <description>Weld Container integrations for the Arquillian Project</description>
     <packaging>pom</packaging>
+    <url>https://github.com/arquillian/arquillian-container-weld</url>
+
+    <inceptionYear>2009</inceptionYear>
+    <organization>
+        <name>Arquillian Community</name>
+        <url>https://arquillian.org</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <scm>
-        <connection>scm:git:git://git@github.com:arquillian/arquillian-container-weld.git</connection>
+        <connection>scm:git:https://github.com/arquillian/arquillian-container-weld.git</connection>
         <developerConnection>scm:git:git@github.com:arquillian/arquillian-container-weld.git</developerConnection>
-        <url>https://github.com/arquillian/arquillian-container-weld.git</url>
+        <url>https://github.com/arquillian/arquillian-container-weld</url>
         <tag>HEAD</tag>
     </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/arquillian/arquillian-container-weld/issues</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>GitHub Actions</system>
+        <url>https://github.com/arquillian/arquillian-container-weld/actions</url>
+    </ciManagement>
 
     <!-- Properties -->
     <properties>
@@ -49,8 +75,13 @@
         <!-- Since jboss-parent:52 jdk.min.version defaults to the latest LTS (25), see https://github.com/jboss/jboss-parent-pom -->
         <jdk.min.version>${maven.compiler.release}</jdk.min.version>
 
-        <!-- Release to Maven Central using the parent's central-release profile -->
+        <!-- maven-release-plugin configuration -->
         <releaseProfiles>central-release</releaseProfiles>
+        <arguments>-DskipTests</arguments>
+
+        <!-- TODO temporarily disabled to test release configuration and thus use the local directory when using perform -->
+        <pushChanges>false</pushChanges>
+        <localCheckout>true</localCheckout>
     </properties>
     <modules>
         <module>impl</module>
@@ -142,18 +173,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <pushChanges>false</pushChanges>
-                    <localCheckout>true</localCheckout>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
