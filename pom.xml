@@ -60,7 +60,7 @@
         <version.arquillian.jakarta>10.0.0.Final</version.arquillian.jakarta>
 
         <weld.api.version>6.0.Final</weld.api.version>
-        <weld.core.version>6.0.4.Final</weld.core.version>
+        <weld.core.version>7.0.0.Final</weld.core.version>
 
         <!-- Versioning -->
         <cdi.api.version>4.1.0</cdi.api.version>
