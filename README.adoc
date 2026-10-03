@@ -12,7 +12,7 @@ either programmatically by passing environment parameter to `TestContainer` (or 
 [cols="4*", options="header"]
 |===
 | *Container Version* | *Jakarta EE* | *CDI* | *Weld*
-| 5.x _(planned)_ | Jakarta EE 12 | CDI 5.0 | Weld 7.0
+| 5.x | Jakarta EE 12 | CDI 5.0 | Weld 7.0
 | 4.x | Jakarta EE 11 | CDI 4.1 | Weld 6.0
 | 3.x | Jakarta EE 9/10 | CDI 3.0/4.0 | Weld 4/5
 | 2.x | Java EE 7 | CDI 1.2 | Weld 2.x
