@@ -15,7 +15,7 @@
     <!-- Artifact Configuration -->
     <groupId>org.jboss.arquillian.container</groupId>
     <artifactId>arquillian-weld-embedded-root</artifactId>
-    <version>4.0.1.Final</version>
+    <version>5.0.0.Final-SNAPSHOT</version>
     <name>Arquillian Container Weld Parent</name>
     <description>Weld Container integrations for the Arquillian Project</description>
     <packaging>pom</packaging>
@@ -39,7 +39,7 @@
         <connection>scm:git:https://github.com/arquillian/arquillian-container-weld.git</connection>
         <developerConnection>scm:git:git@github.com:arquillian/arquillian-container-weld.git</developerConnection>
         <url>https://github.com/arquillian/arquillian-container-weld</url>
-        <tag>4.0.1.Final</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
