@@ -78,6 +78,7 @@
         <!-- maven-release-plugin configuration -->
         <releaseProfiles>central-release</releaseProfiles>
         <arguments>-DskipTests</arguments>
+        <central.deploymentName>arquillian-container-weld-${project.version}</central.deploymentName>
 
         <!-- TODO temporarily disabled to test release configuration and thus use the local directory when using perform -->
         <pushChanges>false</pushChanges>
