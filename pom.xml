@@ -71,7 +71,7 @@
         <shrinkwrap.descriptors.version>2.0.0</shrinkwrap.descriptors.version>
 
         <!-- override from parent -->
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <!-- Since jboss-parent:52 jdk.min.version defaults to the latest LTS (25), see https://github.com/jboss/jboss-parent-pom -->
         <jdk.min.version>${maven.compiler.release}</jdk.min.version>
 
